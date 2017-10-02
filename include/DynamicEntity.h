@@ -20,7 +20,7 @@ private:
 	Vector2 velocity;
 
 public:
-	DynamicEntity();
+	DynamicEntity(IVector2 p, CHAR_INFO c);
 	virtual ~DynamicEntity();
 	virtual void update(float delta) override;
 

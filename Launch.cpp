@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "DynamicEntity.h"
-#include "Map.h"
-#include "NYTimer.h"
+#include "./include/Map.h"
+#include "./include/DynamicEntity.h"
+#include "./include/NYTimer.h"
 
 bool shallClose;
 void loopGame();
@@ -25,6 +25,7 @@ void loopGame()
 		float delta = timer.getElapsedMs();
 
 		map.update(delta);
+		map.drawBuffer();
 
 		shallClose = GetAsyncKeyState(VK_ESCAPE);
 	}

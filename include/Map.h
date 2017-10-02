@@ -4,9 +4,8 @@
  *  Created on: 2 oct. 2017
  *      Author: Valentin
  */
-
-#ifndef MAP_H_
-#define MAP_H_
+#define WIDTH 10
+#define HEIGHT 10
 
 #include <vector>
 #include "Entity.h"
@@ -16,10 +15,17 @@ class Map
 private:
 	std::vector<Entity*> entityList;
 
+	HANDLE hOutput = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD dwBufferSize;
+	COORD dwBufferCoord;
+	SMALL_RECT rcRegion;
+	CHAR_INFO buffer[HEIGHT][WIDTH];
+
 public:
 	Map();
 	virtual ~Map();
-	void update(float delta);
-};
 
-#endif /* MAP_H_ */
+	void update(float delta);
+	void addToBuffer(Entity *e);
+	void drawBuffer();
+};
