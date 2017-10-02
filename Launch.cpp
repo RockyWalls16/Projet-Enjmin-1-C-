@@ -25,7 +25,7 @@ void loopGame()
 	{
 		float delta = timer.getElapsedMs();
 
-		shallClose = getchar() == VK_ESCAPE;
+		shallClose = GetAsyncKeyState(VK_ESCAPE);
 	}
 
 	printf("..OK");

@@ -36,3 +36,14 @@
 .project
 .settings/
 Debug/
+\.vs/
+
+*.opendb
+
+*.db
+
+*.sln
+
+*.vcxproj
+
+*.filters
