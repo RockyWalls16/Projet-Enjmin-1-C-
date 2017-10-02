@@ -53,6 +53,11 @@ struct Vector2
 	{
 		return Vector2(x * a, y * a);
 	}
+
+	Vector2 operator*(const float a) const
+	{
+		return Vector2(x * a, y * a);
+	}
 };
 
 

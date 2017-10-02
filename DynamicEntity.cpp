@@ -24,7 +24,7 @@ DynamicEntity::~DynamicEntity()
 void DynamicEntity::update(float delta)
 {
 	velocity.y += gravity;
-	Vector2 newPos = m_realPosition + velocity;
+	Vector2 newPos = m_realPosition + velocity * delta;
 	m_realPosition = newPos;
 
 	velocity *= 0.85;

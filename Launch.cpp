@@ -19,6 +19,13 @@ void loopGame()
 	NYTimer timer;
 	Map map;
 
+	CHAR_INFO testInfos;
+	testInfos.Attributes = 0x0E;
+	testInfos.Char.AsciiChar = 'H';
+
+	Entity test(IVector2(1,1),testInfos);
+	map.addToBuffer(&test);
+
 	while(!shallClose)
 	{
 		float delta = timer.getElapsedMs();

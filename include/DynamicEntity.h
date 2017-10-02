@@ -21,9 +21,19 @@ private:
 
 public:
 	DynamicEntity(IVector2 p, CHAR_INFO c);
+
+	void setVelocity(Vector2 vel)
+	{
+		velocity = vel;
+	}
+
+	Vector2 getVelocity()
+	{
+		return velocity;
+	}
+
 	virtual ~DynamicEntity();
 	virtual void update(float delta) override;
-
 };
 
 #endif /* DYNAMICENTITY_H_ */

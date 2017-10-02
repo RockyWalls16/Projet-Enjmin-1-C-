@@ -1,10 +1,10 @@
 #pragma once
 #include "DynamicEntity.h"
-class Player :
-	public DynamicEntity
-{
-public:
-	Player();
-	~Player();
-};
-
+//class Player :
+//	public DynamicEntity()
+//{
+//public:
+//	Player();
+//	~Player();
+//};
+//
