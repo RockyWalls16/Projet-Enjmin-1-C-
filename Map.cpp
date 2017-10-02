@@ -37,8 +37,10 @@ void Map::drawBuffer()
 	ReadConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize,
 					  dwBufferCoord, &rcRegion);
 
-	for each (Entity *e in entityList)
+	for(Entity *e : entityList)
+	{
 		buffer[e->getPos().x][e->getPos().y] = e->getInfos();
+	}
 
 	WriteConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize,
 					   dwBufferCoord, &rcRegion);
