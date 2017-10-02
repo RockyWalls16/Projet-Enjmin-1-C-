@@ -9,11 +9,21 @@
 #define DYNAMICENTITY_H_
 
 #include "Entity.h"
+#include "AABB.h"
+#include "Vector.h"
 
-class DynamicEntity : public Entity {
+class DynamicEntity : public Entity
+{
+private:
+	AABB hitbox;
+	float gravity;
+	Vector2 velocity;
+
 public:
 	DynamicEntity();
 	virtual ~DynamicEntity();
+	virtual void update(float delta) override;
+
 };
 
 #endif /* DYNAMICENTITY_H_ */

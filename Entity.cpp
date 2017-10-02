@@ -7,12 +7,17 @@
 
 #include "Entity.h"
 
-Entity::Entity() {
-	// TODO Auto-generated constructor stub
+Entity::Entity() : realPosition(0.0F, 0.0F)
+{
 
 }
 
-Entity::~Entity() {
-	// TODO Auto-generated destructor stub
+Entity::~Entity()
+{
+
 }
 
+void Entity::update(float delta)
+{
+	position = realPosition.asIVector2();
+}
