@@ -14,20 +14,23 @@
 class Entity
 {
 protected:
-	Vector2 m_realPosition;
-	CHAR_INFO m_charInfo;
 	IVector2 m_posInfos;
+	Vector2 m_realPosition;
 
 public:
-	Entity(IVector2 pos, CHAR_INFO info);
+	Entity(IVector2 pos);
 	virtual ~Entity();
 
+	// Update entity
 	virtual void update(float delta);
 
-	CHAR_INFO getInfos()
-	{
-		return m_charInfo;
-	}
+	virtual void drawEntity(CHAR_INFO** buffer) {};
+
+	// Spawn entity
+	void spawn();
+
+	// Despawn entity
+	void despawn();
 
 	IVector2 getPos()
 	{

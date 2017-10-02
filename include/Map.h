@@ -19,13 +19,25 @@ private:
 	COORD dwBufferSize;
 	COORD dwBufferCoord;
 	SMALL_RECT rcRegion;
-	CHAR_INFO buffer[HEIGHT][WIDTH];
+	CHAR_INFO** buffer;
 
 public:
 	Map();
 	virtual ~Map();
 
+	// Reset buffer
+	void resetBuffer();
+
+	// Update map and all entities
 	void update(float delta);
-	void addToBuffer(Entity *e);
+
+	// Add entity to the map
+	void addEntity(Entity *e);
+
+	// Remove entity from the map
+	void removeEntity(Entity *e);
 	void drawBuffer();
+
+	// Singleton
+	static Map& getMap();
 };

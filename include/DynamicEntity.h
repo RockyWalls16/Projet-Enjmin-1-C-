@@ -20,7 +20,7 @@ private:
 	Vector2 velocity;
 
 public:
-	DynamicEntity(IVector2 p, CHAR_INFO c);
+	DynamicEntity(IVector2 p);
 
 	void setVelocity(Vector2 vel)
 	{

@@ -7,8 +7,8 @@
 
 #include "DynamicEntity.h"
 
-DynamicEntity::DynamicEntity(IVector2 p, CHAR_INFO c)
-	: Entity(p,c)
+DynamicEntity::DynamicEntity(IVector2 p)
+	: Entity(p)
 	, hitbox(0, 0, 1, 1)
 	, gravity(0)
 	, velocity({0.0, 0.0})

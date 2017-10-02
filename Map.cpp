@@ -6,10 +6,12 @@
  */
 
 #include "./include/Map.h"
+#include <algorithm>
 
 Map::Map()
 {
 	// Init buffer
+	resetBuffer();
 	hOutput = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
 	dwBufferSize = { WIDTH,HEIGHT };
 	dwBufferCoord = { 0, 0 };
@@ -27,9 +29,15 @@ void Map::update(float delta)
 
 
 
-void Map::addToBuffer(Entity *e)
+void Map::addEntity(Entity *e)
 {
 	entityList.push_back(e);
+}
+
+
+void Map::removeEntity(Entity* e)
+{
+	entityList.erase(std::remove(entityList.begin(), entityList.end(), e), entityList.end());
 }
 
 void Map::drawBuffer()
@@ -39,9 +47,24 @@ void Map::drawBuffer()
 
 	for(Entity *e : entityList)
 	{
-		buffer[e->getPos().x][e->getPos().y] = e->getInfos();
+		e->drawEntity(buffer);
 	}
 
 	WriteConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize,
 					   dwBufferCoord, &rcRegion);
+}
+
+void Map::resetBuffer()
+{
+	buffer = new CHAR_INFO*[HEIGHT];
+	for(int i = 0; i < HEIGHT; ++i)
+	{
+		buffer[i] = new CHAR_INFO[WIDTH];
+	}
+}
+
+Map& Map::getMap()
+{
+	static Map instance;
+	return instance;
 }
