@@ -8,7 +8,7 @@
 #define HEIGHT 10
 
 #include <vector>
-#include "Entity.h"
+#include "Player.h"
 
 class Map
 {

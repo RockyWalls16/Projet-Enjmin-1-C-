@@ -2,7 +2,6 @@
 #include <iostream>
 
 #include "./include/Map.h"
-#include "./include/DynamicEntity.h"
 #include "./include/NYTimer.h"
 
 bool shallClose;
