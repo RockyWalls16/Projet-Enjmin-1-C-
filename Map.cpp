@@ -7,6 +7,7 @@
 
 #include "./include/Map.h"
 #include <algorithm>
+#include <stdio.h>
 
 Map::Map()
 {
@@ -42,7 +43,7 @@ void Map::removeEntity(Entity* e)
 
 void Map::drawBuffer()
 {
-	ReadConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize,
+	ReadConsoleOutput(hOutput, buffer, dwBufferSize,
 					  dwBufferCoord, &rcRegion);
 
 	for(Entity *e : entityList)
@@ -50,17 +51,28 @@ void Map::drawBuffer()
 		e->drawEntity(buffer);
 	}
 
-	WriteConsoleOutput(hOutput, (CHAR_INFO *)buffer, dwBufferSize,
+	WriteConsoleOutput(hOutput, buffer, dwBufferSize,
 					   dwBufferCoord, &rcRegion);
 }
 
 void Map::resetBuffer()
 {
-	buffer = new CHAR_INFO*[HEIGHT];
+	buffer = new CHAR_INFO[WIDTH * HEIGHT];
+	/*buffer = new CHAR_INFO*[HEIGHT];
 	for(int i = 0; i < HEIGHT; ++i)
 	{
 		buffer[i] = new CHAR_INFO[WIDTH];
-	}
+	}*/
+}
+
+int Map::getBufferFlatIndex(int x, int y)
+{
+	return y * WIDTH + x;
+}
+
+int Map::getBufferFlatIndex(IVector2 position)
+{
+	return getBufferFlatIndex(position.x, position.y);
 }
 
 Map& Map::getMap()

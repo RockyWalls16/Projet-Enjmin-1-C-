@@ -17,7 +17,6 @@ int main(int argc, char* args[])
 void loopGame()
 {
 	NYTimer timer;
-	Map map;
 
 	Entity test(IVector2(1,1));
 	test.spawn();
@@ -27,8 +26,8 @@ void loopGame()
 	{
 		float delta = timer.getElapsedMs();
 
-		map.update(delta);
-		map.drawBuffer();
+		Map::getMap().update(delta);
+		Map::getMap().drawBuffer();
 
 		shallClose = GetAsyncKeyState(VK_ESCAPE);
 	}

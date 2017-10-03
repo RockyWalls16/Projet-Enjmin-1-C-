@@ -24,7 +24,7 @@ public:
 	// Update entity
 	virtual void update(float delta);
 
-	virtual void drawEntity(CHAR_INFO** buffer) {};
+	virtual void drawEntity(CHAR_INFO* buffer){};
 
 	// Spawn entity
 	void spawn();

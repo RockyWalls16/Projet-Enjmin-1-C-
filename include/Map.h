@@ -19,7 +19,7 @@ private:
 	COORD dwBufferSize;
 	COORD dwBufferCoord;
 	SMALL_RECT rcRegion;
-	CHAR_INFO** buffer;
+	CHAR_INFO* buffer;
 
 public:
 	Map();
@@ -37,6 +37,10 @@ public:
 	// Remove entity from the map
 	void removeEntity(Entity *e);
 	void drawBuffer();
+
+	// Retrieves an index for 2 coords
+	int getBufferFlatIndex(int x, int y);
+	int getBufferFlatIndex(IVector2 position);
 
 	// Singleton
 	static Map& getMap();
