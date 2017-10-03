@@ -4,9 +4,10 @@ Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 {
 	m_charInfos[0].Attributes = m_charInfos[1].Attributes = 0x0002;
 
-	m_charInfos[1].Char.AsciiChar = 'P';
-	m_charInfos[0].Char.UnicodeChar = 'I';
+	m_charInfos[1].Char.AsciiChar = 206;
+	m_charInfos[0].Char.UnicodeChar = 219;
 
+	// Manage controls
 	if (ID == 0)
 	{
 		m_ctrlUp = VK_UP;
@@ -33,6 +34,8 @@ Player::~Player()
 
 void Player::update(float delta)
 {
+	// TODO : Rotate dans la bonne direction
+
 	if (GetAsyncKeyState(m_ctrlUp))
 	{
 		setVelocity(Vector2(0, -0.000002));

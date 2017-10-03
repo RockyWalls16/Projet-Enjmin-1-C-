@@ -25,7 +25,7 @@ int main(int argc, char* args[])
 
 	loopGame();
 
-	//return 0;
+	return 0;
 }
 
 void loopGame()
