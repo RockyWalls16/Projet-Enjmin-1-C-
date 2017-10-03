@@ -18,7 +18,7 @@ void loopGame()
 {
 	NYTimer timer;
 
-	Entity test(IVector2(1,1));
+	Player test(IVector2(2,2));
 	test.spawn();
 
 

@@ -26,15 +26,16 @@ Map::~Map()
 
 void Map::update(float delta)
 {
+	for (Entity *e : entityList)
+	{
+		e->update(delta);
+	}
 }
-
-
 
 void Map::addEntity(Entity *e)
 {
 	entityList.push_back(e);
 }
-
 
 void Map::removeEntity(Entity* e)
 {
