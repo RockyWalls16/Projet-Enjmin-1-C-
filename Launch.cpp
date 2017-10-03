@@ -32,9 +32,9 @@ void loopGame()
 {
 	NYTimer timer;
 
-	Player test(IVector2(2,2));
-	test.spawn();
-
+	Player player0(IVector2(2,2), 0), player1(IVector2(2, 10), 1);
+	player0.spawn();
+	player1.spawn();
 
 	while(!shallClose)
 	{

@@ -1,38 +1,57 @@
 ﻿#include "Player.h"
 
-Player::Player(IVector2 p) : DynamicEntity(p)
+Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 {
 	m_charInfos[0].Attributes = m_charInfos[1].Attributes = 0x0002;
 
 	m_charInfos[1].Char.AsciiChar = 'P';
 	m_charInfos[0].Char.UnicodeChar = 'I';
+
+	if (ID == 0)
+	{
+		m_ctrlUp = VK_UP;
+		m_ctrlDown = VK_DOWN;
+		m_ctrlLeft = VK_LEFT;
+		m_ctrlRight = VK_RIGHT;
+		m_ctrlFire = VK_DELETE;
+	}
+	else if (ID == 1)
+	{
+		m_ctrlUp = 'W';
+		m_ctrlDown = 'S';
+		m_ctrlLeft = 'A';
+		m_ctrlRight = 'D';
+		m_ctrlFire = VK_SPACE;
+	}
 }
 
 
 Player::~Player()
-{}
+{
+
+}
 
 void Player::update(float delta)
 {
-	if (GetAsyncKeyState(VK_UP))
+	if (GetAsyncKeyState(m_ctrlUp))
 	{
-		m_charInfos[1].Char.AsciiChar = 'X';
 		setVelocity(Vector2(0, -0.000002));
 	}
-	else if (GetAsyncKeyState(VK_DOWN))
+	else if (GetAsyncKeyState(m_ctrlDown))
 	{
-		m_charInfos[1].Char.AsciiChar = 'X';
 		setVelocity(Vector2(0, 0.000002));
 	}
-	else if (GetAsyncKeyState(VK_LEFT))
+	else if (GetAsyncKeyState(m_ctrlLeft))
 	{
-		m_charInfos[1].Char.AsciiChar = 'X';
 		setVelocity(Vector2(-0.000002, 0));
 	}
-	else if (GetAsyncKeyState(VK_RIGHT))
+	else if (GetAsyncKeyState(m_ctrlRight))
+	{
+		setVelocity(Vector2(0.000002, 0));
+	}
+	else if (GetAsyncKeyState(m_ctrlFire))
 	{
 		m_charInfos[1].Char.AsciiChar = 'X';
-		setVelocity(Vector2(0.000002, 0));
 	}
 
 	DynamicEntity::update(delta);
