@@ -31,16 +31,19 @@ int main(int argc, char* args[])
 void loopGame()
 {
 	NYTimer timer;
+	float lastTime = 0;
 
 	Player player0(IVector2(10,10), 0), player1(IVector2(12, 10), 1);
 	player0.spawn();
 	player1.spawn();
 
+	//startTime = timer.
+
 	while(!shallClose)
 	{
-		float delta = timer.getElapsedMs();
+		Map::getMap().update(timer.getElapsedMs() - lastTime);
+		lastTime = timer.getElapsedMs();
 
-		Map::getMap().update(delta);
 		Map::getMap().drawBuffer();
 
 		shallClose = GetAsyncKeyState(VK_ESCAPE);

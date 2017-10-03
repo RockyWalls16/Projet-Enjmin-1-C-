@@ -52,14 +52,14 @@ void Player::update(float delta)
 	}*/
 	else if (GetAsyncKeyState(m_ctrlLeft))
 	{
-		setVelocity(Vector2(-0.000002, 0));
+		setVelocity(Vector2(-0.01, 0));
 		m_direction = IVector2(-1, 0);
 
 		m_charInfos[2].Char.AsciiChar = 60;
 	}
 	else if (GetAsyncKeyState(m_ctrlRight))
 	{
-		setVelocity(Vector2(0.000002, 0));
+		setVelocity(Vector2(0.01, 0));
 		m_direction = IVector2(1, 0);
 
 		m_charInfos[2].Char.AsciiChar = 62;
