@@ -4,7 +4,8 @@
 class Player : public DynamicEntity
 {
 private:
-	CHAR_INFO m_charInfos[2];
+	CHAR_INFO m_charInfos[3];
+	IVector2 m_direction;
 
 	int m_ctrlUp, m_ctrlDown, m_ctrlLeft, m_ctrlRight, m_ctrlFire;
 

@@ -1,11 +1,13 @@
 ﻿#include "Player.h"
 
 Player::Player(IVector2 p, int ID) : DynamicEntity(p)
+	, m_direction(0, 0)
 {
-	m_charInfos[0].Attributes = m_charInfos[1].Attributes = 0x0002;
+	m_charInfos[0].Attributes = m_charInfos[1].Attributes = m_charInfos[2].Attributes = 0x0002;
 
-	m_charInfos[1].Char.AsciiChar = 206;
-	m_charInfos[0].Char.UnicodeChar = 219;
+	m_charInfos[2].Char.AsciiChar = 0;
+	m_charInfos[1].Char.AsciiChar = 2;
+	m_charInfos[0].Char.AsciiChar = 219;
 
 	// Manage controls
 	if (ID == 0)
@@ -38,23 +40,33 @@ void Player::update(float delta)
 
 	if (GetAsyncKeyState(m_ctrlUp))
 	{
-		setVelocity(Vector2(0, -0.000002));
+		/*setVelocity(Vector2(0, -0.000002));
+		m_direction = IVector2(0, -1);*/
+
+		// JUMP
 	}
-	else if (GetAsyncKeyState(m_ctrlDown))
+	/*else if (GetAsyncKeyState(m_ctrlDown))
 	{
 		setVelocity(Vector2(0, 0.000002));
-	}
+		m_direction = IVector2(0, 1);
+	}*/
 	else if (GetAsyncKeyState(m_ctrlLeft))
 	{
 		setVelocity(Vector2(-0.000002, 0));
+		m_direction = IVector2(-1, 0);
+
+		m_charInfos[2].Char.AsciiChar = 60;
 	}
 	else if (GetAsyncKeyState(m_ctrlRight))
 	{
 		setVelocity(Vector2(0.000002, 0));
+		m_direction = IVector2(1, 0);
+
+		m_charInfos[2].Char.AsciiChar = 62;
 	}
 	else if (GetAsyncKeyState(m_ctrlFire))
 	{
-		m_charInfos[1].Char.AsciiChar = 'X';
+		// Fire
 	}
 
 	DynamicEntity::update(delta);
@@ -73,8 +85,11 @@ void Player::drawEntity(CHAR_INFO* buffer)
 	else if (m_posInfos.y > HEIGHT)
 		m_realPosition.y = 0;
 		
-	buffer[m_posInfos.x + m_posInfos.y * WIDTH] = m_charInfos[1];
+	buffer[m_posInfos.x + m_posInfos.y * WIDTH] = m_charInfos[0];
+	buffer[(m_posInfos.x) + (m_posInfos.y - 1)* WIDTH] = m_charInfos[1];
 
-	if (m_posInfos.y +1 < HEIGHT && m_posInfos.y +1 > 0)
-		buffer[m_posInfos.x + (m_posInfos.y + 1)* WIDTH] = m_charInfos[0];
+	if(m_direction.x == 1)
+		buffer[(m_posInfos.x + 1) + (m_posInfos.y* WIDTH)] = m_charInfos[2];
+	else if(m_direction.x == -1)
+		buffer[(m_posInfos.x - 1) + (m_posInfos.y* WIDTH)] = m_charInfos[2];
 }
