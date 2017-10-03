@@ -10,7 +10,7 @@
 
 Entity::Entity(IVector2 pos)
 	: m_posInfos(pos)
-	, m_realPosition(0.0F, 0.0F)
+	, m_realPosition(pos.x, pos.y)
 {
 
 }

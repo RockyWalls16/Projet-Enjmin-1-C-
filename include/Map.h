@@ -4,9 +4,6 @@
  *  Created on: 2 oct. 2017
  *      Author: Valentin
  */
-#define WIDTH 10
-#define HEIGHT 10
-
 #include <vector>
 #include "Player.h"
 

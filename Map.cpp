@@ -47,6 +47,8 @@ void Map::drawBuffer()
 	ReadConsoleOutput(hOutput, buffer, dwBufferSize,
 					  dwBufferCoord, &rcRegion);
 
+	resetBuffer();
+
 	for(Entity *e : entityList)
 	{
 		e->drawEntity(buffer);
@@ -59,11 +61,12 @@ void Map::drawBuffer()
 void Map::resetBuffer()
 {
 	buffer = new CHAR_INFO[WIDTH * HEIGHT];
-	/*buffer = new CHAR_INFO*[HEIGHT];
-	for(int i = 0; i < HEIGHT; ++i)
+
+	for (int i = 0; i < WIDTH * HEIGHT; i++)
 	{
-		buffer[i] = new CHAR_INFO[WIDTH];
-	}*/
+		//buffer[i].Char.AsciiChar = NULL;
+		buffer[i].Attributes = 0x0000;
+	}
 }
 
 int Map::getBufferFlatIndex(int x, int y)

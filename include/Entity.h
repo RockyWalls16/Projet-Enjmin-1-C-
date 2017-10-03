@@ -10,6 +10,7 @@
 
 #include <windows.h>
 #include "Vector.h"
+#include "DEFINES.h"
 
 class Entity
 {
