@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string>
 #include <iostream>
 
 #include "./include/Map.h"
@@ -7,11 +8,24 @@
 bool shallClose;
 void loopGame();
 
+using namespace std;
+
 int main(int argc, char* args[])
 {
+	string command("mode ");
+	command.append(to_string(WIDTH));
+	command.append(",");
+	command.append(to_string(HEIGHT));
+
+	system(command.data());
+
+	SMALL_RECT WinRect = { 0, 0, WIDTH, HEIGHT };
+	SMALL_RECT* WinSize = &WinRect;
+	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), true, WinSize);
+
 	loopGame();
 
-	return 0;
+	//return 0;
 }
 
 void loopGame()

@@ -14,10 +14,25 @@ Player::~Player()
 
 void Player::update(float delta)
 {
-	if (GetAsyncKeyState(VK_TAB))
+	if (GetAsyncKeyState(VK_UP))
 	{
 		m_charInfos[1].Char.AsciiChar = 'X';
-		setVelocity(Vector2(1,1));
+		setVelocity(Vector2(0, -0.000001));
+	}
+	else if (GetAsyncKeyState(VK_DOWN))
+	{
+		m_charInfos[1].Char.AsciiChar = 'X';
+		setVelocity(Vector2(0, 0.000001));
+	}
+	else if (GetAsyncKeyState(VK_LEFT))
+	{
+		m_charInfos[1].Char.AsciiChar = 'X';
+		setVelocity(Vector2(-0.000001, 0));
+	}
+	else if (GetAsyncKeyState(VK_RIGHT))
+	{
+		m_charInfos[1].Char.AsciiChar = 'X';
+		setVelocity(Vector2(0.000001, 0));
 	}
 
 	DynamicEntity::update(delta);
