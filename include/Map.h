@@ -4,9 +4,6 @@
  *  Created on: 2 oct. 2017
  *      Author: Valentin
  */
-#define WIDTH 10
-#define HEIGHT 10
-
 #include <vector>
 #include "Player.h"
 
@@ -20,13 +17,15 @@ private:
 	COORD dwBufferCoord;
 	SMALL_RECT rcRegion;
 	CHAR_INFO* buffer;
+	CHAR_INFO* mapBackground;
+	int mapWidth;
+	int mapHeight;
 
 public:
-	Map();
 	virtual ~Map();
 
 	// Reset buffer
-	void resetBuffer();
+	void resetBuffer(int bufferWidth, int bufferHeight);
 
 	// Update map and all entities
 	void update(float delta);
@@ -42,6 +41,21 @@ public:
 	int getBufferFlatIndex(int x, int y);
 	int getBufferFlatIndex(IVector2 position);
 
+	void initMapBackground(int width, int height);
+
+	void setMapSize(int width, int height);
+
+
 	// Singleton
 	static Map& getMap();
+
+	CHAR_INFO* getMapBackground() const
+	{
+		return mapBackground;
+	}
+
+	CHAR_INFO* getBuffer() const
+	{
+		return buffer;
+	}
 };

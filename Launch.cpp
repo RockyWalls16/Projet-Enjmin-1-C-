@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "./include/Map.h"
-#include "./include/NYTimer.h"
+#include "Map.h"
+#include "NYTimer.h"
+#include "MapParser.h"
 
 bool shallClose;
 void loopGame();
@@ -17,6 +18,11 @@ int main(int argc, char* args[])
 void loopGame()
 {
 	NYTimer timer;
+
+	if(!MapParser::loadMap("Map_1.tmx"))
+	{
+		std::cout << "Failed to load map" << std::endl;
+	}
 
 	Entity test(IVector2(1,1));
 	test.spawn();
