@@ -37,8 +37,6 @@ void loopGame()
 	player0.spawn();
 	player1.spawn();
 
-	//startTime = timer.
-
 	while(!shallClose)
 	{
 		Map::getMap().update(timer.getElapsedMs() - lastTime);
