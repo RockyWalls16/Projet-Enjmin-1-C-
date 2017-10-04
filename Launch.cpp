@@ -36,8 +36,8 @@ void loopGame()
 
 	while(!shallClose)
 	{
-		Map::getMap().update(timer.getElapsedMs() - lastTime);
-		lastTime = timer.getElapsedMs();
+		Map::getMap().update(timer.getElapsedSeconds() - lastTime);
+		lastTime = timer.getElapsedSeconds();
 
 		Map::getMap().drawBuffer();
 

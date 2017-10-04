@@ -22,6 +22,12 @@ void Map::update(float delta)
 	{
 		e->update(delta);
 	}
+
+	if (entityToSpawn != nullptr)
+		addEntity(entityToSpawn);
+
+	if (entityToRemove != nullptr)
+		entityList.erase(std::remove(entityList.begin(), entityList.end(), entityToRemove), entityList.end());
 }
 
 void Map::addEntity(Entity *e)
@@ -29,9 +35,14 @@ void Map::addEntity(Entity *e)
 	entityList.push_back(e);
 }
 
+void Map::prepareSpawnEntity(Entity * e)
+{
+	entityToSpawn = e;
+}
+
 void Map::removeEntity(Entity* e)
 {
-	entityList.erase(std::remove(entityList.begin(), entityList.end(), e), entityList.end());
+	entityToRemove = e;
 }
 
 void Map::drawBuffer()

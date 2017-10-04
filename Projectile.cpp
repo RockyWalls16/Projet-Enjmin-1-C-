@@ -2,11 +2,12 @@
 #include "include\Projectile.h"
 #include "Map.h"
 
-Projectile::Projectile(IVector2 p, float lifeTime) : DynamicEntity(p)
+Projectile::Projectile(IVector2 p, float lifeTime, int direction) : DynamicEntity(p)
 	, m_lifeTime(lifeTime)
+	, m_direction(direction)
 {
-	m_charInfo.Attributes = FOREGROUND_RED;
-	m_charInfo.Char.AsciiChar = '~';
+	m_charInfo.Attributes = FOREGROUND_INTENSITY;
+	m_charInfo.Char.AsciiChar = '*';
 }
 
 
@@ -19,8 +20,11 @@ void Projectile::update(float delta)
 {
 	m_lifeTime -= delta;
 
-	if (m_lifeTime < 0)
+	if (m_lifeTime < 0 ||
+		m_pos.x < 0 || m_pos.x > Map::getMap().getMapWidth())
 		despawn();
+
+	setVelocity(Vector2(m_direction, 0));
 
 	DynamicEntity::update(delta);
 }

@@ -23,6 +23,9 @@ private:
 	int mapWidth;
 	int mapHeight;
 
+	Entity* entityToSpawn;
+	Entity* entityToRemove;
+
 public:
 	virtual ~Map();
 
@@ -34,6 +37,7 @@ public:
 
 	// Add entity to the map
 	void addEntity(Entity *e);
+	void prepareSpawnEntity(Entity *e);
 
 	// Remove entity from the map
 	void removeEntity(Entity *e);
