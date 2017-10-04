@@ -23,12 +23,12 @@ void loopGame()
 {
 	NYTimer timer;
 
-	if(!MapParser::loadMap("Map_1.tmx"))
+	if(!(MapParser::loadColorObjectTypes() && MapParser::loadMap("Map_1.tmx")))
 	{
-		std::cout << "Failed to load map" << std::endl;
+		std::cout << "FAIL" << std::endl;
 	}
 
-	Player test(IVector2(2,2));
+	Player test(IVector2(2,5));
 	test.spawn();
 
 

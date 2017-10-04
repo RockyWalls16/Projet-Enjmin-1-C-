@@ -1,35 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objecttypes>
  <objecttype name="White" color="#ffffff">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="true"/>
   <property name="green" type="bool" default="true"/>
   <property name="intense" type="bool" default="true"/>
   <property name="red" type="bool" default="true"/>
  </objecttype>
  <objecttype name="Black" color="#000000">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="false"/>
   <property name="green" type="bool" default="false"/>
   <property name="intense" type="bool" default="false"/>
   <property name="red" type="bool" default="false"/>
  </objecttype>
  <objecttype name="Dark_Gray" color="#2c2c2c">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="false"/>
   <property name="green" type="bool" default="false"/>
   <property name="intense" type="bool" default="true"/>
   <property name="red" type="bool" default="false"/>
  </objecttype>
  <objecttype name="Dark_Red" color="#550000">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="false"/>
   <property name="green" type="bool" default="false"/>
   <property name="intense" type="bool" default="false"/>
   <property name="red" type="bool" default="true"/>
  </objecttype>
  <objecttype name="Red" color="#ff0000">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="false"/>
   <property name="green" type="bool" default="false"/>
   <property name="intense" type="bool" default="true"/>
@@ -43,70 +58,100 @@
   <property name="red" type="bool" default="false"/>
  </objecttype>
  <objecttype name="Green" color="#00ff00">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="false"/>
   <property name="green" type="bool" default="true"/>
   <property name="intense" type="bool" default="true"/>
   <property name="red" type="bool" default="false"/>
  </objecttype>
  <objecttype name="Dark_Yellow" color="#ffb914">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="false"/>
   <property name="green" type="bool" default="true"/>
   <property name="intense" type="bool" default="false"/>
   <property name="red" type="bool" default="true"/>
  </objecttype>
  <objecttype name="Yellow" color="#ffff00">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="false"/>
   <property name="green" type="bool" default="true"/>
   <property name="intense" type="bool" default="true"/>
   <property name="red" type="bool" default="true"/>
  </objecttype>
  <objecttype name="Dark_Blue" color="#00007f">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="true"/>
   <property name="green" type="bool" default="false"/>
   <property name="intense" type="bool" default="false"/>
   <property name="red" type="bool" default="false"/>
  </objecttype>
  <objecttype name="Blue" color="#0000ff">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="true"/>
   <property name="green" type="bool" default="false"/>
   <property name="intense" type="bool" default="true"/>
   <property name="red" type="bool" default="false"/>
  </objecttype>
  <objecttype name="Purple" color="#55007f">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="true"/>
   <property name="green" type="bool" default="false"/>
   <property name="intense" type="bool" default="false"/>
   <property name="red" type="bool" default="true"/>
  </objecttype>
  <objecttype name="Magenta" color="#ff00ff">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="true"/>
   <property name="green" type="bool" default="false"/>
   <property name="intense" type="bool" default="true"/>
   <property name="red" type="bool" default="true"/>
  </objecttype>
  <objecttype name="Dark_Cyan" color="#005e6d">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="true"/>
   <property name="green" type="bool" default="true"/>
   <property name="intense" type="bool" default="false"/>
   <property name="red" type="bool" default="false"/>
  </objecttype>
  <objecttype name="Cyan" color="#00ffff">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="true"/>
   <property name="green" type="bool" default="true"/>
   <property name="intense" type="bool" default="true"/>
   <property name="red" type="bool" default="false"/>
  </objecttype>
  <objecttype name="Light_Gray" color="#c3c3c7">
-  <property name="background" type="bool" default="false"/>
+  <property name="background-intense" type="bool" default="false"/>
+  <property name="background-red" type="bool" default="false"/>
+  <property name="background-green" type="bool" default="false"/>
+  <property name="background-blue" type="bool" default="false"/>
   <property name="blue" type="bool" default="true"/>
   <property name="green" type="bool" default="true"/>
   <property name="intense" type="bool" default="false"/>
