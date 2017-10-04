@@ -38,21 +38,15 @@ Player::~Player()
 
 void Player::fire()
 {
-	/*Projectile newProj(IVector2(m_direction, 0), 1);
-	newProj.setVelocity(Vector2(m_direction/1000, 0));
-	newProj.spawn();*/
-
-	Player player0(IVector2(20, 20), 0);
-	player0.spawn();	
+	Map::getMap().prepareSpawnEntity(new Projectile(IVector2(m_pos.x + m_direction, m_pos.y),1000, m_direction));
 }
 
 void Player::update(float delta)
 {
-	if (GetAsyncKeyState(m_ctrlUp))
+	if (GetAsyncKeyState(m_ctrlUp) && m_canJump)
 	{
 		// JUMP
-		if(m_canJump)
-			addVelocity(Vector2(0, -0.1));
+		addVelocity(Vector2(0, -0.1));
 
 		m_canJump = false;
 	}
