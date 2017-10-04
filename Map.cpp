@@ -5,7 +5,6 @@
  *      Author: Valentin
  */
 
-#pragma once
 #include "Map.h"
 #include <algorithm>
 #include <iostream>
@@ -62,29 +61,22 @@ void Map::resetBuffer(int bufferWidth, int bufferHeight)
 	dwBufferSize = { (short) bufferWidth , (short) bufferHeight };
 	dwBufferCoord = { 0, 0 };
 	rcRegion = { 0, 0, (short) (bufferWidth - 1), (short) (bufferHeight - 1) };
-
-	// Buggy
-	/*std::string command("mode ");
-	command.append(std::to_string(mapWidth));
-	command.append(",");
-	command.append(std::to_string(mapHeight));
-
-	system(command.data());
-
-	SMALL_RECT WinRect = { 0, 0, (short) mapWidth, (short) mapHeight };
-	SMALL_RECT* WinSize = &WinRect;
-	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), true, WinSize);*/
-
-	/*for (int i = 0; i < WIDTH * HEIGHT; i++)
-	{
-		//buffer[i].Char.AsciiChar = NULL;
-		buffer[i].Attributes = 0x0000;
-	}*/
 }
 
 
 void Map::initMapBackground(int width, int height)
 {
+	std::string command("mode ");
+	command.append(std::to_string(width));
+	command.append(",");
+	command.append(std::to_string(height));
+
+	system(command.data());
+
+	SMALL_RECT WinRect = { 0, 0, (short) width, (short) height };
+	SMALL_RECT* WinSize = &WinRect;
+	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), true, WinSize);
+
 	// Clear memory
 	if(mapBackground)
 	{

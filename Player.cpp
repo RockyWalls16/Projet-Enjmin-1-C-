@@ -1,10 +1,10 @@
-﻿#pragma once
-#include "Player.h"
+﻿#include "Player.h"
 #include "Map.h"
 
 Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	, m_direction(1)
 	, m_canJump(true)
+	, m_canFire(true)
 {
 	m_charInfos[0].Attributes = m_charInfos[1].Attributes = m_charInfos[2].Attributes = 0x0002;
 

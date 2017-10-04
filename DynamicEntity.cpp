@@ -5,8 +5,8 @@
  *      Author: Valentin
  */
 
-#pragma once
 #include "DynamicEntity.h"
+#include <iostream>
 
 DynamicEntity::DynamicEntity(IVector2 p)
 	: Entity(p)
@@ -28,6 +28,7 @@ void DynamicEntity::update(float delta)
 	Vector2 newPos = m_realPosition + velocity * delta;
 	m_realPosition = newPos;
 
+	std::cout << (float) delta << std::endl;
 	velocity = velocity * 0.65 * delta;
 
 	Entity::update(delta);

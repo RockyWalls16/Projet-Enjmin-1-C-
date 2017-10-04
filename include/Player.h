@@ -1,6 +1,6 @@
 #pragma once
 #include "DynamicEntity.h"
-#include "include\Projectile.h"
+#include "Projectile.h"
 
 class Player : public DynamicEntity
 {

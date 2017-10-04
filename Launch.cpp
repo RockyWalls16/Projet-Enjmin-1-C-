@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
+#include <windows.h>
 
 #include "Map.h"
 #include "NYTimer.h"
@@ -29,6 +30,8 @@ void loopGame()
 		std::cout << "FAIL" << std::endl;
 	}
 
+	PlaySound("Assets/bgm.wav", NULL, SND_FILENAME|SND_LOOP|SND_ASYNC);
+
 	Player player0(IVector2(10,10), 0), player1(IVector2(12, 10), 1);
 	player0.spawn();
 	player1.spawn();
@@ -39,7 +42,7 @@ void loopGame()
 		Map::getMap().update(timer.getElapsedMs() - lastTime);
 		lastTime = timer.getElapsedMs();
 
-		Map::getMap().drawBuffer();
+		//Map::getMap().drawBuffer();
 
 		shallClose = GetAsyncKeyState(VK_ESCAPE);
 	}

@@ -1,5 +1,4 @@
-#pragma once
-#include "include\Projectile.h"
+#include "Projectile.h"
 #include "Map.h"
 
 Projectile::Projectile(IVector2 p, float lifeTime) : DynamicEntity(p)
