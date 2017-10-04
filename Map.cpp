@@ -62,7 +62,8 @@ void Map::resetBuffer(int bufferWidth, int bufferHeight)
 	dwBufferCoord = { 0, 0 };
 	rcRegion = { 0, 0, (short) (bufferWidth - 1), (short) (bufferHeight - 1) };
 
-	std::string command("mode ");
+	// Buggy
+	/*std::string command("mode ");
 	command.append(std::to_string(mapWidth));
 	command.append(",");
 	command.append(std::to_string(mapHeight));
@@ -71,7 +72,7 @@ void Map::resetBuffer(int bufferWidth, int bufferHeight)
 
 	SMALL_RECT WinRect = { 0, 0, (short) mapWidth, (short) mapHeight };
 	SMALL_RECT* WinSize = &WinRect;
-	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), true, WinSize);
+	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), true, WinSize);*/
 
 	/*for (int i = 0; i < WIDTH * HEIGHT; i++)
 	{
