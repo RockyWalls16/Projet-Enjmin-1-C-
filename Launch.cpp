@@ -22,21 +22,22 @@ int main(int argc, char* args[])
 void loopGame()
 {
 	NYTimer timer;
+	float lastTime = 0;
 
 	if(!MapParser::loadMap("Map_1.tmx"))
 	{
 		std::cout << "Failed to load map" << std::endl;
 	}
 
-	Player test(IVector2(2,2));
-	test.spawn();
-
+	Player player0(IVector2(10,10), 0), player1(IVector2(12, 10), 1);
+	player0.spawn();
+	player1.spawn();
 
 	while(!shallClose)
 	{
-		float delta = timer.getElapsedMs();
+		Map::getMap().update(timer.getElapsedMs() - lastTime);
+		lastTime = timer.getElapsedMs();
 
-		Map::getMap().update(delta);
 		Map::getMap().drawBuffer();
 
 		shallClose = GetAsyncKeyState(VK_ESCAPE);

@@ -22,6 +22,11 @@ private:
 public:
 	DynamicEntity(IVector2 p);
 
+	void addVelocity(Vector2 vel)
+	{
+		velocity = velocity + vel;
+	}
+
 	void setVelocity(Vector2 vel)
 	{
 		velocity = vel;

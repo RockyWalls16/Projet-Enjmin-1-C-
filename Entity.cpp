@@ -9,7 +9,7 @@
 #include "Map.h"
 
 Entity::Entity(IVector2 pos)
-	: m_posInfos(pos)
+	: m_pos(pos)
 	, m_realPosition(pos.x, pos.y)
 {
 
@@ -22,7 +22,7 @@ Entity::~Entity()
 
 void Entity::update(float delta)
 {
-	m_posInfos = m_realPosition.asIVector2();
+	m_pos = m_realPosition.asIVector2();
 }
 
 void Entity::spawn()

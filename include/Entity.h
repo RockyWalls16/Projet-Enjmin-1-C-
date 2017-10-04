@@ -14,7 +14,7 @@
 class Entity
 {
 protected:
-	IVector2 m_posInfos;
+	IVector2 m_pos;
 	Vector2 m_realPosition;
 
 public:
@@ -34,7 +34,7 @@ public:
 
 	IVector2 getPos()
 	{
-		return m_posInfos;
+		return m_pos;
 	}
 };
 
