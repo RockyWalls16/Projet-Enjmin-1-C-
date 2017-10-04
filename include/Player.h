@@ -12,6 +12,9 @@ private:
 
 	int m_ctrlUp, m_ctrlDown, m_ctrlLeft, m_ctrlRight, m_ctrlFire;
 
+	float m_reloadTime;
+	float m_nextShotReadyTime;
+
 public:
 	Player(IVector2 p, int ID);
 	~Player();
