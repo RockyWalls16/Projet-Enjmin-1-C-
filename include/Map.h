@@ -4,6 +4,8 @@
  *  Created on: 2 oct. 2017
  *      Author: Valentin
  */
+
+#pragma once
 #include <vector>
 #include "Player.h"
 

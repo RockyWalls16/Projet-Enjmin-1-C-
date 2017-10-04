@@ -8,6 +8,7 @@
 #ifndef DYNAMICENTITY_H_
 #define DYNAMICENTITY_H_
 
+#pragma once
 #include "Entity.h"
 #include "AABB.h"
 #include "Vector.h"

@@ -1,4 +1,6 @@
+#pragma once
 #include "include\Projectile.h"
+#include "Map.h"
 
 Projectile::Projectile(IVector2 p, float lifeTime) : DynamicEntity(p)
 	, m_lifeTime(lifeTime)
@@ -25,5 +27,5 @@ void Projectile::update(float delta)
 
 void Projectile::drawEntity(CHAR_INFO * buffer)
 {
-	buffer[m_pos.x + m_pos.y * WIDTH] = m_charInfo;
+	buffer[m_pos.x + m_pos.y * Map::getMap().getMapWidth()] = m_charInfo;
 }

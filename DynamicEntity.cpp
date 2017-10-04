@@ -5,6 +5,7 @@
  *      Author: Valentin
  */
 
+#pragma once
 #include "DynamicEntity.h"
 
 DynamicEntity::DynamicEntity(IVector2 p)

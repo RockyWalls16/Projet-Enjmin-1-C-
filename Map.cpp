@@ -5,6 +5,7 @@
  *      Author: Valentin
  */
 
+#pragma once
 #include "Map.h"
 #include <algorithm>
 #include <iostream>

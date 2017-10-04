@@ -8,6 +8,7 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
+#pragma once
 #include <windows.h>
 #include "Vector.h"
 

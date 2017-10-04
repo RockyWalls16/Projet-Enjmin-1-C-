@@ -1,4 +1,5 @@
-﻿#include "Player.h"
+﻿#pragma once
+#include "Player.h"
 #include "Map.h"
 
 Player::Player(IVector2 p, int ID) : DynamicEntity(p)
@@ -88,16 +89,16 @@ void Player::drawEntity(CHAR_INFO* buffer)
 {
 	// Check borders
 	if (m_pos.x < 0)
-		m_realPosition.x = WIDTH;
-	else if (m_pos.x > WIDTH)
+		m_realPosition.x = Map::getMap().getMapWidth();
+	else if (m_pos.x > Map::getMap().getMapWidth())
 		m_realPosition.x = 0;
 
 	if (m_pos.y < 0)
-		m_realPosition.y = HEIGHT;
-	else if (m_pos.y > HEIGHT)
+		m_realPosition.y = Map::getMap().getMapHeight();
+	else if (m_pos.y > Map::getMap().getMapHeight())
 		m_realPosition.y = 0;
 		
-	buffer[m_pos.x + m_pos.y * WIDTH] = m_charInfos[0];
-	buffer[(m_pos.x) + (m_pos.y - 1)* WIDTH] = m_charInfos[1];
-	buffer[(m_pos.x + m_direction) + (m_pos.y* WIDTH)] = m_charInfos[2];
+	buffer[m_pos.x + m_pos.y * Map::getMap().getMapWidth()] = m_charInfos[0];
+	buffer[(m_pos.x) + (m_pos.y - 1)* Map::getMap().getMapWidth()] = m_charInfos[1];
+	buffer[(m_pos.x + m_direction) + (m_pos.y* Map::getMap().getMapWidth())] = m_charInfos[2];
 }
