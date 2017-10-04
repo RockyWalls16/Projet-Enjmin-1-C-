@@ -18,6 +18,26 @@ struct IVector2
 		x = vX;
 		y = vY;
 	}
+
+	IVector2 operator+=(const IVector2& a) const
+	{
+		return IVector2(a.x + x, a.y + y);
+	}
+
+	IVector2 operator+(const IVector2& a) const
+	{
+		return IVector2(a.x + x, a.y + y);
+	}
+
+	IVector2 operator*=(const float a) const
+	{
+		return IVector2(x * a, y * a);
+	}
+
+	IVector2 operator*(const float a) const
+	{
+		return IVector2(x * a, y * a);
+	}
 };
 
 struct Vector2

@@ -58,4 +58,14 @@ public:
 	{
 		return buffer;
 	}
+
+	int getMapHeight() const
+	{
+		return mapHeight;
+	}
+
+	int getMapWidth() const
+	{
+		return mapWidth;
+	}
 };

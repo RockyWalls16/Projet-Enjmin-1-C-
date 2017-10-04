@@ -1,18 +1,22 @@
 #include <stdio.h>
+#include <string>
 #include <iostream>
 
 #include "Map.h"
 #include "NYTimer.h"
 #include "MapParser.h"
+#include "Player.h"
 
 bool shallClose;
 void loopGame();
+
+using namespace std;
 
 int main(int argc, char* args[])
 {
 	loopGame();
 
-	return 0;
+	//return 0;
 }
 
 void loopGame()
@@ -24,7 +28,7 @@ void loopGame()
 		std::cout << "Failed to load map" << std::endl;
 	}
 
-	Entity test(IVector2(1,1));
+	Player test(IVector2(2,2));
 	test.spawn();
 
 
