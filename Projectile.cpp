@@ -6,7 +6,7 @@ Projectile::Projectile(IVector2 p, float lifeTime, int direction) : DynamicEntit
 	, m_lifeTime(lifeTime)
 	, m_direction(direction)
 {
-	m_charInfo.Attributes = FOREGROUND_BLUE;
+	m_charInfo.Attributes = FOREGROUND_INTENSITY;
 	m_charInfo.Char.AsciiChar = '*';
 }
 

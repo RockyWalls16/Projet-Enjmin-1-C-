@@ -12,6 +12,8 @@ Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	m_charInfos[1].Char.AsciiChar = 2;
 	m_charInfos[0].Char.AsciiChar = 219;
 
+	m_reloadTime = 1;
+
 	// Manage controls
 	if (ID == 0)
 	{
@@ -43,6 +45,11 @@ void Player::fire()
 
 void Player::update(float delta)
 {
+	m_nextShotReadyTime -= delta;
+
+	if(m_nextShotReadyTime < 0)
+		m_canFire = true;
+
 	if (GetAsyncKeyState(m_ctrlUp) && m_canJump)
 	{
 		// JUMP
@@ -57,14 +64,14 @@ void Player::update(float delta)
 	}*/
 	else if (GetAsyncKeyState(m_ctrlLeft))
 	{
-		setVelocity(Vector2(-0.01, 0));
+		setVelocity(Vector2(-10, 0));
 		m_direction = -1;
 
 		m_charInfos[2].Char.AsciiChar = 60;
 	}
 	else if (GetAsyncKeyState(m_ctrlRight))
 	{
-		setVelocity(Vector2(0.01, 0));
+		setVelocity(Vector2(10, 0));
 		m_direction = 1;
 
 		m_charInfos[2].Char.AsciiChar = 62;
@@ -73,6 +80,7 @@ void Player::update(float delta)
 	if (GetAsyncKeyState(m_ctrlFire) && m_canFire)
 	{
 		m_canFire = false;
+		m_nextShotReadyTime = m_reloadTime;
 		fire();
 	}
 
