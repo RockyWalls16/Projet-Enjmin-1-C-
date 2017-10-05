@@ -15,7 +15,7 @@
 
 class DynamicEntity : public Entity
 {
-private:
+protected:
 	AABB hitbox;
 	float gravity;
 	Vector2 velocity;
@@ -39,7 +39,7 @@ public:
 	}
 
 	virtual ~DynamicEntity();
-	virtual void update(float delta) override;
+	virtual void tick() override;
 };
 
 #endif /* DYNAMICENTITY_H_ */

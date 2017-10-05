@@ -22,14 +22,13 @@ DynamicEntity::~DynamicEntity()
 
 }
 
-void DynamicEntity::update(float delta)
+void DynamicEntity::tick()
 {
 	velocity.y += gravity;
-	Vector2 newPos = m_realPosition + velocity * delta;
+	Vector2 newPos = m_realPosition + velocity;
 	m_realPosition = newPos;
 
-	std::cout << (float) delta << std::endl;
-	velocity = velocity * 0.65 * delta;
+	velocity = velocity * 0.02;
 
-	Entity::update(delta);
+	Entity::tick();
 }

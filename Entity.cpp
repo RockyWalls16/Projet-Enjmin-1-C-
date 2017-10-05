@@ -20,7 +20,7 @@ Entity::~Entity()
 	despawn();
 }
 
-void Entity::update(float delta)
+void Entity::tick()
 {
 	m_pos = m_realPosition.asIVector2();
 }

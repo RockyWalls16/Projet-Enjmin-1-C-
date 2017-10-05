@@ -12,7 +12,7 @@ public:
 	Projectile(IVector2 p, float lifeTime, int direction);
 	~Projectile();
 
-	virtual void update(float delta) override;
-	virtual void drawEntity(CHAR_INFO* buffer) override;
+	virtual void tick() override;
+	virtual void render(CHAR_INFO* buffer) override;
 };
 

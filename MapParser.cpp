@@ -83,6 +83,9 @@ bool MapParser::loadMap(std::string name)
 		tinyxml2::XMLElement* objects = objectLayers->FirstChildElement("object");
 		while(objects != nullptr)
 		{
+			// Fetch object name
+			const char* name = objects->Attribute("name");
+
 			// Fetch object type
 			const char* type = objects->Attribute("type");
 

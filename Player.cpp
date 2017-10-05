@@ -5,7 +5,9 @@ Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	, m_direction(1)
 	, m_canJump(true)
 	, m_canFire(true)
+	, m_nextShotReadyTime(1)
 {
+	//gravity = 0.98F;
 	m_charInfos[0].Attributes = m_charInfos[1].Attributes = m_charInfos[2].Attributes = 0x0002;
 
 	m_charInfos[2].Char.AsciiChar = 62;
@@ -43,9 +45,9 @@ void Player::fire()
 	Map::getMap().prepareSpawnEntity(new Projectile(IVector2(m_pos.x + m_direction, m_pos.y),1000, m_direction));
 }
 
-void Player::update(float delta)
+void Player::tick()
 {
-	m_nextShotReadyTime -= delta;
+	m_nextShotReadyTime--;
 
 	if(m_nextShotReadyTime < 0)
 		m_canFire = true;
@@ -64,14 +66,14 @@ void Player::update(float delta)
 	}*/
 	else if (GetAsyncKeyState(m_ctrlLeft))
 	{
-		setVelocity(Vector2(-10, 0));
+		setVelocity(Vector2(-0.5, 0));
 		m_direction = -1;
 
 		m_charInfos[2].Char.AsciiChar = 60;
 	}
 	else if (GetAsyncKeyState(m_ctrlRight))
 	{
-		setVelocity(Vector2(10, 0));
+		setVelocity(Vector2(0.5, 0));
 		m_direction = 1;
 
 		m_charInfos[2].Char.AsciiChar = 62;
@@ -84,10 +86,10 @@ void Player::update(float delta)
 		fire();
 	}
 
-	DynamicEntity::update(delta);
+	DynamicEntity::tick();
 }
 
-void Player::drawEntity(CHAR_INFO* buffer)
+void Player::render(CHAR_INFO* buffer)
 {
 	// Check borders
 	if (m_pos.x < 0)

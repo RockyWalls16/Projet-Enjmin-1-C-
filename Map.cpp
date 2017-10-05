@@ -15,11 +15,11 @@ Map::~Map()
 
 }
 
-void Map::update(float delta)
+void Map::tick()
 {
 	for (Entity *e : entityList)
 	{
-		e->update(delta);
+		e->tick();
 	}
 
 	if (entityToSpawn != nullptr)
@@ -44,14 +44,14 @@ void Map::removeEntity(Entity* e)
 	entityToRemove = e;
 }
 
-void Map::drawBuffer()
+void Map::render()
 {
 	resetBuffer(mapWidth, mapHeight);
 	memcpy(buffer, mapBackground, mapWidth * mapHeight * sizeof(CHAR_INFO));
 
 	for(Entity *e : entityList)
 	{
-		e->drawEntity(buffer);
+		e->render(buffer);
 	}
 
 	WriteConsoleOutput(hOutput, buffer, dwBufferSize,

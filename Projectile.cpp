@@ -15,20 +15,20 @@ Projectile::~Projectile()
 
 }
 
-void Projectile::update(float delta)
+void Projectile::tick()
 {
-	m_lifeTime -= delta;
+	m_lifeTime--;
 
 	if (m_lifeTime < 0 ||
 		m_pos.x < 0 || m_pos.x > Map::getMap().getMapWidth())
 		despawn();
 
-	setVelocity(Vector2(m_direction, 0));
+	setVelocity(Vector2(m_direction * 0.05F, 0));
 
-	DynamicEntity::update(delta);
+	DynamicEntity::tick();
 }
 
-void Projectile::drawEntity(CHAR_INFO * buffer)
+void Projectile::render(CHAR_INFO * buffer)
 {
-	buffer[m_pos.x + m_pos.y * Map::getMap().getMapWidth()] = m_charInfo;
+	buffer[Map::getMap().getBufferFlatIndex(m_pos)] = m_charInfo;
 }

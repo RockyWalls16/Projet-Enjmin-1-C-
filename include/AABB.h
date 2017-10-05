@@ -15,9 +15,10 @@ private:
 	int y;
 	int x2;
 	int y2;
+	bool blockCollision;
 
 public:
-	AABB(int x, int y, int x2, int y2);
+	AABB(int x, int y, int x2, int y2, bool blockCollision = false);
 
 	// Update bounding box position
 	void updatePos(int x, int y);

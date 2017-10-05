@@ -7,7 +7,7 @@
 
 #include "AABB.h"
 
-AABB::AABB(int x, int y, int x2, int y2) : x(x), y(y), x2(x2), y2(y2)
+AABB::AABB(int x, int y, int x2, int y2, bool blockCollision) : x(x), y(y), x2(x2), y2(y2), blockCollision(blockCollision)
 {
 }
 

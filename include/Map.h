@@ -33,7 +33,7 @@ public:
 	void resetBuffer(int bufferWidth, int bufferHeight);
 
 	// Update map and all entities
-	void update(float delta);
+	void tick();
 
 	// Add entity to the map
 	void addEntity(Entity *e);
@@ -41,7 +41,7 @@ public:
 
 	// Remove entity from the map
 	void removeEntity(Entity *e);
-	void drawBuffer();
+	void render();
 
 	// Retrieves an index for 2 coords
 	int getBufferFlatIndex(int x, int y);
