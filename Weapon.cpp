@@ -2,7 +2,7 @@
 #include "Weapon.h"
 #include "Map.h";
 
-Weapon::Weapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime, int shotSpeed) : StaticEntity(p)
+Weapon::Weapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime, float shotSpeed) : StaticEntity(p)
 	, m_leftSkin(leftSkin)
 	, m_rightSkin(rightSkin)
 	, m_shotSpeed(shotSpeed)

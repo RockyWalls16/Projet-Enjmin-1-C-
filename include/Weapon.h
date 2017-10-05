@@ -16,7 +16,7 @@ private:
 	bool m_canFire;
 
 public:
-	Weapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime, int shotSpeed);
+	Weapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime, float shotSpeed);
 
 	virtual void tick() override;
 

@@ -7,14 +7,14 @@ Projectile::Projectile(IVector2 p, float speed, int direction) : DynamicEntity(p
 {
 	m_charInfo.Attributes = FOREGROUND_INTENSITY;
 	m_charInfo.Char.AsciiChar = '*';
-
-	setVelocity(Vector2((float)m_direction * m_speed, 0));
 }
 
 void Projectile::tick()
 {
 	if (m_pos.x < 0 || m_pos.x > Map::getMap().getMapWidth())
 		despawn();
+
+	setVelocity(Vector2(m_direction * m_speed, 0));
 
 	DynamicEntity::tick();
 }
