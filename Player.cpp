@@ -49,10 +49,13 @@ void Player::fire()
 	Map::getMap().prepareSpawnEntity(new Projectile(IVector2(m_pos.x + m_direction, m_pos.y),1000, m_direction));
 }
 
-void Player::equip(BonusWeapon *bonus)
+void Player::equip(Weapon *bonus)
 {
-	m_leftWeaponSkin = bonus->getSkins()[0];
-	m_rightWeaponSkin = bonus->getSkins()[1];
+	m_reloadTime = bonus->getShotReloadTime();
+	m_reloadTime = bonus->getShotReloadTime();
+
+	m_leftWeaponSkin = bonus->getSkins();
+	m_rightWeaponSkin = bonus->getSkins(true);
 
 	m_direction == 1 ?
 		m_charInfos[2].Char.AsciiChar = m_rightWeaponSkin :

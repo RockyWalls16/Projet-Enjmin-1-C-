@@ -16,6 +16,7 @@ private:
 	char m_leftWeaponSkin, m_rightWeaponSkin;
 
 	float m_reloadTime;
+	float m_shotSpeed;
 	float m_nextShotReadyTime;
 
 public:
@@ -24,7 +25,7 @@ public:
 
 	void fire();
 
-	void equip(BonusWeapon *bonus);
+	void equip(Weapon *bonus);
 
 	virtual void tick() override;
 	virtual void render(CHAR_INFO* buffer) override;
