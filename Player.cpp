@@ -14,7 +14,10 @@ Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	m_charInfos[1].Char.AsciiChar = 2;
 	m_charInfos[0].Char.AsciiChar = 219;
 
-	m_reloadTime = 1;
+	m_leftWeaponSkin = '<';
+	m_rightWeaponSkin = '>';
+
+	m_reloadTime = 10;
 
 	// Manage controls
 	if (ID == 0)
@@ -42,7 +45,18 @@ Player::~Player()
 
 void Player::fire()
 {
+	m_canFire = false;
 	Map::getMap().prepareSpawnEntity(new Projectile(IVector2(m_pos.x + m_direction, m_pos.y),1000, m_direction));
+}
+
+void Player::equip(BonusWeapon *bonus)
+{
+	m_leftWeaponSkin = bonus->getSkins()[0];
+	m_rightWeaponSkin = bonus->getSkins()[1];
+
+	m_direction == 1 ?
+		m_charInfos[2].Char.AsciiChar = m_rightWeaponSkin :
+		m_charInfos[2].Char.AsciiChar = m_leftWeaponSkin;
 }
 
 void Player::tick()
@@ -69,21 +83,27 @@ void Player::tick()
 		setVelocity(Vector2(-0.5, 0));
 		m_direction = -1;
 
-		m_charInfos[2].Char.AsciiChar = 60;
+		m_charInfos[2].Char.AsciiChar = m_leftWeaponSkin;
 	}
 	else if (GetAsyncKeyState(m_ctrlRight))
 	{
 		setVelocity(Vector2(0.5, 0));
 		m_direction = 1;
 
-		m_charInfos[2].Char.AsciiChar = 62;
+		m_charInfos[2].Char.AsciiChar = m_rightWeaponSkin;
 	}
 
-	if (GetAsyncKeyState(m_ctrlFire) && m_canFire)
+	if (GetAsyncKeyState(m_ctrlFire))
 	{
-		m_canFire = false;
-		m_nextShotReadyTime = m_reloadTime;
-		fire();
+		if (m_canFire)
+		{
+			m_nextShotReadyTime = m_reloadTime;
+			fire();
+		}
+	}
+	else
+	{
+		m_canFire = true;
 	}
 
 	DynamicEntity::tick();
