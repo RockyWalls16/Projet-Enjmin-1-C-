@@ -6,19 +6,19 @@
 #define TICK_PER_SECOND 30.0
 #define TICK_DELAY (1 / TICK_PER_SECOND)
 
-#include <time.h>
+#include <windows.h>
 
 class TimeManager
 {
 private:
 	static unsigned int fps;
 	static unsigned int lastFps;
-	static long lastTime;
+	static struct timeb lastTime;
 	static double secondProgress;
 	static double tickInterpolation;
 	static double tickTime;
 	static double delta;
-	struct timespec ts_start;
+	static struct timeb ts_start;
 
 public:
 	static void initTimer();
@@ -30,7 +30,7 @@ public:
 	static double getTickInterpolation();
 	static double getDelta();
 	static float getFDelta();
-	static long getTimeMillis();
+	static struct timeb getTimeMillis();
 
 	static unsigned int getFps()
 	{

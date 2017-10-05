@@ -9,14 +9,13 @@
 #define DYNAMICENTITY_H_
 
 #pragma once
-#include "Entity.h"
+#include "StaticEntity.h"
 #include "AABB.h"
 #include "Vector.h"
 
-class DynamicEntity : public Entity
+class DynamicEntity : public StaticEntity
 {
 protected:
-	AABB hitbox;
 	float gravity;
 	Vector2 velocity;
 

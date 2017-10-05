@@ -9,8 +9,7 @@
 #include <iostream>
 
 DynamicEntity::DynamicEntity(IVector2 p)
-	: Entity(p)
-	, hitbox(0, 0, 1, 1)
+	: StaticEntity(p)
 	, gravity(0)
 	, velocity({0.0, 0.0})
 {

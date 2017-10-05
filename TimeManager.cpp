@@ -1,13 +1,16 @@
 #include <TimeManager.h>
-#include <time.h>
+#include <windows.h>
+#include <iostream>
+#include <sys/timeb.h>
 
 unsigned int TimeManager::fps = 0;
 unsigned int TimeManager::lastFps = 0;
-long TimeManager::lastTime = 0;
+struct timeb TimeManager::lastTime;
 double TimeManager::secondProgress = 0;
 double TimeManager::tickInterpolation = 0;
 double TimeManager::delta = 0;
 double TimeManager::tickTime = 0;
+struct timeb TimeManager::ts_start;
 
 void TimeManager::initTimer()
 {
@@ -18,8 +21,10 @@ void TimeManager::updateTimer()
 {
 	fps++;
 
-	long time = getTimeMillis();
-	delta = (time - lastTime) / MILLIS_FACTOR;
+	struct timeb time = getTimeMillis();
+
+	delta = ((time.time * 1000 + time.millitm) - (lastTime.time * 1000 + lastTime.millitm)) / MILLIS_FACTOR;
+
 	secondProgress += delta;
 	tickTime += delta;
 
@@ -49,12 +54,11 @@ bool TimeManager::shallTick()
 	return false;
 }
 
-long TimeManager::getTimeMillis()
+struct timeb TimeManager::getTimeMillis()
 {
-	struct timespec ts_start;
-	clock_gettime(CLOCK_MONOTONIC, &ts_start);
+	ftime(&ts_start);
 
-	return ts_start.tv_sec * MILLIS_FACTOR + ts_start.tv_nsec / NANO_FACTOR;
+	return ts_start;
 }
 
 double TimeManager::getTickInterpolation()
@@ -71,4 +75,3 @@ float TimeManager::getFDelta()
 {
 	return (float) delta;
 }
-
