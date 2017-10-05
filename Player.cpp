@@ -5,19 +5,14 @@ Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	, m_direction(1)
 	, m_canJump(true)
 	, m_canFire(true)
-	, m_nextShotReadyTime(1)
 {
 	//gravity = 0.98F;
 	m_charInfos[0].Attributes = m_charInfos[1].Attributes = m_charInfos[2].Attributes = 0x0002;
 
-	m_charInfos[2].Char.AsciiChar = 62;
 	m_charInfos[1].Char.AsciiChar = 2;
 	m_charInfos[0].Char.AsciiChar = 219;
 
-	m_leftWeaponSkin = '<';
-	m_rightWeaponSkin = '>';
-
-	m_reloadTime = 10;
+	equip(new Weapon(IVector2(0, 0), '<', '>', 10, 10));
 
 	// Manage controls
 	if (ID == 0)
@@ -40,35 +35,19 @@ Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 
 Player::~Player()
 {
-
+	delete(m_weapon);
 }
 
-void Player::fire()
+void Player::equip(Weapon *newWeapon)
 {
-	m_canFire = false;
-	Map::getMap().prepareSpawnEntity(new Projectile(IVector2(m_pos.x + m_direction, m_pos.y),1000, m_direction));
-}
+	m_weapon = newWeapon;
 
-void Player::equip(Weapon *bonus)
-{
-	m_reloadTime = bonus->getShotReloadTime();
-	m_reloadTime = bonus->getShotReloadTime();
-
-	m_leftWeaponSkin = bonus->getSkins();
-	m_rightWeaponSkin = bonus->getSkins(true);
-
-	m_direction == 1 ?
-		m_charInfos[2].Char.AsciiChar = m_rightWeaponSkin :
-		m_charInfos[2].Char.AsciiChar = m_leftWeaponSkin;
+	// Update weapon direction
+	m_charInfos[2].Char.AsciiChar = m_weapon->getSkins(m_direction == 1);
 }
 
 void Player::tick()
 {
-	m_nextShotReadyTime--;
-
-	if(m_nextShotReadyTime < 0)
-		m_canFire = true;
-
 	if (GetAsyncKeyState(m_ctrlUp) && m_canJump)
 	{
 		// JUMP
@@ -86,29 +65,20 @@ void Player::tick()
 		setVelocity(Vector2(-0.5, 0));
 		m_direction = -1;
 
-		m_charInfos[2].Char.AsciiChar = m_leftWeaponSkin;
+		m_charInfos[2].Char.AsciiChar = m_weapon->getSkins(false);
 	}
 	else if (GetAsyncKeyState(m_ctrlRight))
 	{
 		setVelocity(Vector2(0.5, 0));
 		m_direction = 1;
 
-		m_charInfos[2].Char.AsciiChar = m_rightWeaponSkin;
+		m_charInfos[2].Char.AsciiChar = m_weapon->getSkins(true);
 	}
 
 	if (GetAsyncKeyState(m_ctrlFire))
-	{
-		if (m_canFire)
-		{
-			m_nextShotReadyTime = m_reloadTime;
-			fire();
-		}
-	}
-	else
-	{
-		m_canFire = true;
-	}
+		m_weapon->fire(IVector2(m_pos.x + m_direction, m_pos.y), m_direction);
 
+	m_weapon->tick();
 	DynamicEntity::tick();
 }
 

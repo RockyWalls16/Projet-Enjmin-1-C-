@@ -33,9 +33,9 @@ void loopGame()
 	Player player0(IVector2(10,10), 0), player1(IVector2(12, 10), 1);
 	player0.spawn();
 	player1.spawn();
-
-	BonusWeapon *test = new BonusWeapon(IVector2(0, 0), 'q', 'p');
-	player0.equip(test);
+/*
+	Weapon *test = new Weapon(IVector2(0, 0), 'q', 'p', 10, 20);
+	player0.equip(test);*/
 
 	while(!shallClose)
 	{
