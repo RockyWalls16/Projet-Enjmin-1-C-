@@ -12,7 +12,7 @@ Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	m_charInfos[1].Char.AsciiChar = 2;
 	m_charInfos[0].Char.AsciiChar = 219;
 
-	equip(new Weapon(IVector2(0, 0), '<', '>', 10, 10));
+	equip(new Weapon(IVector2(0, 0), '<', '>', 10, 0.5));
 
 	// Manage controls
 	if (ID == 0)

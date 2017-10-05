@@ -1,29 +1,20 @@
 #include "Projectile.h"
 #include "Map.h"
 
-Projectile::Projectile(IVector2 p, float lifeTime, int direction) : DynamicEntity(p)
-	, m_lifeTime(lifeTime)
+Projectile::Projectile(IVector2 p, float speed, int direction) : DynamicEntity(p)
+	, m_speed(speed)
 	, m_direction(direction)
 {
 	m_charInfo.Attributes = FOREGROUND_INTENSITY;
 	m_charInfo.Char.AsciiChar = '*';
-}
 
-
-Projectile::~Projectile()
-{
-
+	setVelocity(Vector2((float)m_direction * m_speed, 0));
 }
 
 void Projectile::tick()
 {
-	m_lifeTime--;
-
-	if (m_lifeTime < 0 ||
-		m_pos.x < 0 || m_pos.x > Map::getMap().getMapWidth())
+	if (m_pos.x < 0 || m_pos.x > Map::getMap().getMapWidth())
 		despawn();
-
-	setVelocity(Vector2(m_direction * 0.05F, 0));
 
 	DynamicEntity::tick();
 }

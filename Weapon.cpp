@@ -35,6 +35,6 @@ void Weapon::fire(IVector2 pos, int dir)
 	{
 		m_canFire = false;
 		m_nextShotReadyTime = m_reloadTime;
-		Map::getMap().prepareSpawnEntity(new Projectile(pos, 1000, dir));
+		Map::getMap().prepareSpawnEntity(new Projectile(pos, m_shotSpeed, dir));
 	}
 }
