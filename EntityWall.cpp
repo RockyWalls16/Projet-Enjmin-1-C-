@@ -7,9 +7,9 @@
 
 #include <EntityWall.h>
 
-EntityWall::EntityWall(IVector2 pos, AABB& aabb) : StaticEntity(pos)
+EntityWall::EntityWall(IVector2 pos, AABB* aabb) : StaticEntity(pos)
 {
-
+	hitbox = aabb;
 }
 
 EntityWall::~EntityWall()

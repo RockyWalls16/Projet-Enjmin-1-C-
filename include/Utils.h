@@ -10,27 +10,12 @@
 
 #include <string>
 #include <vector>
+#include <windows.h>
 
 using namespace std;
 
-int split(vector<string>& tokens, string str, char separator)
-{
-	tokens.clear();
+int split(vector<string>& tokens, string str, char separator);
 
-	string::size_type stTemp = str.find(separator);
-
-	while(stTemp != string::npos)
-	{
-		tokens.push_back(str.substr(0, stTemp));
-		str = str.substr(stTemp + 1);
-		stTemp = str.find(separator);
-	}
-
-	tokens.push_back(str);
-
-	return tokens.size();
-}
-
-
+void setLogLine(int y);
 
 #endif /* INCLUDE_UTILS_H_ */

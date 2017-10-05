@@ -30,7 +30,35 @@ public:
 	bool intersect(AABB& other);
 
 	// Clip velocity to new pos
-	void clipXY(int& motionX, int& motionY, AABB& other);
+	void clipX(float* motionX, AABB& other);
+
+	// Return if aabb is on ground
+	bool clipY(float* motionY, AABB& other);
+
+	bool isBlockCollision() const
+	{
+		return blockCollision;
+	}
+
+	int getX() const
+	{
+		return x;
+	}
+
+	int getX2() const
+	{
+		return x2;
+	}
+
+	int getY() const
+	{
+		return y;
+	}
+
+	int getY2() const
+	{
+		return y2;
+	}
 };
 
 #endif /* AABB_H_ */

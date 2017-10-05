@@ -14,7 +14,7 @@
 class EntityWall : public StaticEntity
 {
 public:
-	EntityWall(IVector2 pos, AABB& aabb);
+	EntityWall(IVector2 pos, AABB* aabb);
 	virtual ~EntityWall();
 };
 

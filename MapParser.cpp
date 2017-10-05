@@ -13,6 +13,8 @@
 #include <string>
 #include <stdio.h>
 #include <algorithm>
+#include "EntityWall.h"
+#include "Vector.h"
 
 #define MAP_PATH "./Maps/"
 #define TILE_OFFSET 20
@@ -102,6 +104,12 @@ bool MapParser::loadMap(std::string name)
 			yPos /= 16;
 			width /= 8;
 			height /= 16;
+
+			if(strcmp(name, "Wall") == 0)
+			{
+				EntityWall* wall = new EntityWall(IVector2(xPos, yPos), new AABB(xPos, yPos, xPos + width, yPos + height, true));
+				wall->spawn();
+			}
 
 			WORD objectAttribute;
 			std::vector<int> filters;

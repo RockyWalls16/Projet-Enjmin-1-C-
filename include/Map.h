@@ -74,4 +74,9 @@ public:
 	{
 		return mapWidth;
 	}
+
+	const std::vector<Entity*>& getEntityList() const
+	{
+		return entityList;
+	}
 };

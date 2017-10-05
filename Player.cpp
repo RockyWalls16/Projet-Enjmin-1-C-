@@ -3,11 +3,11 @@
 
 Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	, m_direction(1)
-	, m_canJump(true)
 	, m_canFire(true)
 	, m_nextShotReadyTime(1)
 {
-	//gravity = 0.98F;
+	gravity = 4.5F;
+	hitbox = new AABB(p.x, p.y, p.x + 1, p.y + 2);
 	m_charInfos[0].Attributes = m_charInfos[1].Attributes = m_charInfos[2].Attributes = 0x0002;
 
 	m_charInfos[2].Char.AsciiChar = 62;
@@ -52,12 +52,10 @@ void Player::tick()
 	if(m_nextShotReadyTime < 0)
 		m_canFire = true;
 
-	if (GetAsyncKeyState(m_ctrlUp) && m_canJump)
+	if (GetAsyncKeyState(m_ctrlUp) && onGround)
 	{
 		// JUMP
-		addVelocity(Vector2(0, -0.1));
-
-		m_canJump = false;
+		addVelocity(Vector2(0, -4));
 	}
 	/*else if (GetAsyncKeyState(m_ctrlDown))
 	{
@@ -66,14 +64,14 @@ void Player::tick()
 	}*/
 	else if (GetAsyncKeyState(m_ctrlLeft))
 	{
-		setVelocity(Vector2(-0.5, 0));
+		setVelocity(Vector2(-0.8, 0));
 		m_direction = -1;
 
 		m_charInfos[2].Char.AsciiChar = 60;
 	}
 	else if (GetAsyncKeyState(m_ctrlRight))
 	{
-		setVelocity(Vector2(0.5, 0));
+		setVelocity(Vector2(0.8, 0));
 		m_direction = 1;
 
 		m_charInfos[2].Char.AsciiChar = 62;
@@ -98,11 +96,11 @@ void Player::render(CHAR_INFO* buffer)
 		m_realPosition.x = 0;
 
 	if (m_pos.y < 0)
-		m_realPosition.y = Map::getMap().getMapHeight();
+		m_realPosition.y = Map::getMap().getMapHeight() - 1;
 	else if (m_pos.y > Map::getMap().getMapHeight())
 		m_realPosition.y = 0;
 		
-	buffer[m_pos.x + m_pos.y * Map::getMap().getMapWidth()] = m_charInfos[0];
-	buffer[(m_pos.x) + (m_pos.y - 1)* Map::getMap().getMapWidth()] = m_charInfos[1];
-	buffer[(m_pos.x + m_direction) + (m_pos.y* Map::getMap().getMapWidth())] = m_charInfos[2];
+	buffer[Map::getMap().getBufferFlatIndex(m_pos.x, m_pos.y + 1)] = m_charInfos[0];
+	buffer[Map::getMap().getBufferFlatIndex(m_pos)] = m_charInfos[1];
+	buffer[Map::getMap().getBufferFlatIndex(m_pos.x + m_direction, m_pos.y + 1)] = m_charInfos[2];
 }

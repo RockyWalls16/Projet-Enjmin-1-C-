@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="25" tilewidth="8" tileheight="16" nextobjectid="99">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="25" tilewidth="8" tileheight="16" nextobjectid="101">
  <tileset firstgid="1" name="Texture" tilewidth="8" tileheight="16" tilecount="280" columns="10">
   <image source="../Tools/Texture.png" width="80" height="448"/>
   <tile id="3">
@@ -47,14 +47,15 @@
     <property name="Block" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="30" name="Wall" type="Dark_Gray" x="0" y="16" width="8" height="224">
+  <object id="30" name="Wall" type="Dark_Gray" x="0" y="32" width="8" height="208">
    <properties>
     <property name="Block" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="31" name="Wall" type="Dark_Gray" x="632" y="16" width="8" height="224">
+  <object id="31" name="Wall" type="Dark_Gray" x="632" y="32" width="8" height="208">
    <properties>
     <property name="Block" type="bool" value="true"/>
+    <property name="intense" type="bool" value="true"/>
    </properties>
   </object>
   <object id="33" name="Wall" x="368" y="256" width="176" height="16">

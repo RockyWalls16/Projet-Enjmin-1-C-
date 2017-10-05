@@ -80,11 +80,11 @@ void Map::initMapBackground(int width, int height)
 	std::string command("mode ");
 	command.append(std::to_string(width));
 	command.append(",");
-	command.append(std::to_string(height));
+	command.append(std::to_string(height + 6));
 
 	system(command.data());
 
-	SMALL_RECT WinRect = { 0, 0, (short) width, (short) height };
+	SMALL_RECT WinRect = { 0, 0, (short) width, (short) (height + 6) };
 	SMALL_RECT* WinSize = &WinRect;
 	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), true, WinSize);
 
@@ -100,7 +100,8 @@ void Map::initMapBackground(int width, int height)
 
 int Map::getBufferFlatIndex(int x, int y)
 {
-	return y * mapWidth + x;
+	int index = y * mapWidth + x;
+	return index < 0 || index > mapWidth * mapHeight ? 0 : index;
 }
 
 int Map::getBufferFlatIndex(IVector2 position)

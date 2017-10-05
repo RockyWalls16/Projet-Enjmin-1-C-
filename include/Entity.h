@@ -11,6 +11,7 @@
 #pragma once
 #include <windows.h>
 #include "Vector.h"
+#include "AABB.h"
 
 class Entity
 {
@@ -37,6 +38,8 @@ public:
 	{
 		return m_pos;
 	}
+
+	virtual AABB* getAABB() { return nullptr; }
 };
 
 #endif /* ENTITY_H_ */

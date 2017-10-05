@@ -13,12 +13,14 @@
 
 class StaticEntity : public Entity
 {
-private:
+protected:
 	AABB* hitbox;
 
 public:
 	StaticEntity(IVector2 pos);
 	virtual ~StaticEntity();
+
+	virtual AABB* getAABB() { return hitbox; }
 };
 
 #endif /* INCLUDE_STATICENTITY_H_ */

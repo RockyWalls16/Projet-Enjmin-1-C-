@@ -7,12 +7,15 @@
 
 #include <StaticEntity.h>
 
-StaticEntity::StaticEntity(IVector2 pos) : Entity(pos)
+StaticEntity::StaticEntity(IVector2 pos) : Entity(pos), hitbox(nullptr)
 {
 
 }
 
 StaticEntity::~StaticEntity()
 {
-	delete(hitbox);
+	if(hitbox)
+	{
+		delete(hitbox);
+	}
 }

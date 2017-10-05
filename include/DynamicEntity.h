@@ -18,6 +18,7 @@ class DynamicEntity : public StaticEntity
 protected:
 	float gravity;
 	Vector2 velocity;
+	bool onGround;
 
 public:
 	DynamicEntity(IVector2 p);
