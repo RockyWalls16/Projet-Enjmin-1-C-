@@ -1,6 +1,7 @@
 #pragma once
 #include "DynamicEntity.h"
 #include "Projectile.h"
+#include "Weapon.h"
 
 class Player : public DynamicEntity
 {
@@ -11,14 +12,13 @@ private:
 
 	int m_ctrlUp, m_ctrlDown, m_ctrlLeft, m_ctrlRight, m_ctrlFire;
 
-	float m_reloadTime;
-	float m_nextShotReadyTime;
+	Weapon* m_weapon;
 
 public:
 	Player(IVector2 p, int ID);
 	~Player();
 
-	void fire();
+	void equip(Weapon *newWeapon);
 
 	virtual void tick() override;
 	virtual void render(CHAR_INFO* buffer) override;

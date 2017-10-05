@@ -4,17 +4,15 @@
 Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	, m_direction(1)
 	, m_canFire(true)
-	, m_nextShotReadyTime(1)
 {
 	gravity = 4.5F;
 	hitbox = new AABB(p.x, p.y, p.x + 1, p.y + 2);
 	m_charInfos[0].Attributes = m_charInfos[1].Attributes = m_charInfos[2].Attributes = 0x0002;
 
-	m_charInfos[2].Char.AsciiChar = 62;
 	m_charInfos[1].Char.AsciiChar = 2;
 	m_charInfos[0].Char.AsciiChar = 219;
 
-	m_reloadTime = 1;
+	equip(new Weapon(IVector2(0, 0), '<', '>', 10, 0.5));
 
 	// Manage controls
 	if (ID == 0)
@@ -37,21 +35,19 @@ Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 
 Player::~Player()
 {
-
+	delete(m_weapon);
 }
 
-void Player::fire()
+void Player::equip(Weapon *newWeapon)
 {
-	Map::getMap().prepareSpawnEntity(new Projectile(IVector2(m_pos.x + m_direction, m_pos.y),1000, m_direction));
+	m_weapon = newWeapon;
+
+	// Update weapon direction
+	m_charInfos[2].Char.AsciiChar = m_weapon->getSkins(m_direction == 1);
 }
 
 void Player::tick()
 {
-	m_nextShotReadyTime--;
-
-	if(m_nextShotReadyTime < 0)
-		m_canFire = true;
-
 	if (GetAsyncKeyState(m_ctrlUp) && onGround)
 	{
 		// JUMP
@@ -67,23 +63,20 @@ void Player::tick()
 		setVelocity(Vector2(-0.8, 0));
 		m_direction = -1;
 
-		m_charInfos[2].Char.AsciiChar = 60;
+		m_charInfos[2].Char.AsciiChar = m_weapon->getSkins(false);
 	}
 	else if (GetAsyncKeyState(m_ctrlRight))
 	{
 		setVelocity(Vector2(0.8, 0));
 		m_direction = 1;
 
-		m_charInfos[2].Char.AsciiChar = 62;
+		m_charInfos[2].Char.AsciiChar = m_weapon->getSkins(true);
 	}
 
-	if (GetAsyncKeyState(m_ctrlFire) && m_canFire)
-	{
-		m_canFire = false;
-		m_nextShotReadyTime = m_reloadTime;
-		fire();
-	}
+	if (GetAsyncKeyState(m_ctrlFire))
+		m_weapon->fire(IVector2(m_pos.x + m_direction, m_pos.y), m_direction);
 
+	m_weapon->tick();
 	DynamicEntity::tick();
 }
 
