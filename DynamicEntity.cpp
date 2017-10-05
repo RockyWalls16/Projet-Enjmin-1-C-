@@ -36,10 +36,9 @@ void DynamicEntity::tick()
 		for(Entity* entity : Map::getMap().getEntityList())
 		{
 			AABB* otherEntity = entity->getAABB();
-			if(otherEntity->isBlockCollision())
-			{
-				otherEntity->clipX(&velocity.x, *hitbox);
-			}
+			if(otherEntity != nullptr)
+				if(otherEntity->isBlockCollision())
+					otherEntity->clipX(&velocity.x, *hitbox);
 		}
 
 		hitbox->updatePos(m_pos.x + (int) velocity.x, m_pos.y);
@@ -48,10 +47,9 @@ void DynamicEntity::tick()
 		for(Entity* entity : Map::getMap().getEntityList())
 		{
 			AABB* otherEntity = entity->getAABB();
-			if(otherEntity->isBlockCollision())
-			{
-				isGrounded = isGrounded || otherEntity->clipY(&velocity.y, *hitbox);
-			}
+			if (otherEntity != nullptr)
+				if(otherEntity->isBlockCollision())
+					isGrounded = isGrounded || otherEntity->clipY(&velocity.y, *hitbox);
 		}
 	}
 
