@@ -8,7 +8,7 @@
 #ifndef INCLUDE_VECTOR_H_
 #define INCLUDE_VECTOR_H_
 
-#include <math.h>
+#include "math.h"
 
 struct IVector2
 {
@@ -47,7 +47,6 @@ struct Vector2
 	float x;
 	float y;
 
-
 	Vector2(float vX, float vY)
 	{
 		x = vX;
@@ -56,7 +55,8 @@ struct Vector2
 
 	IVector2 asIVector2()
 	{
-		IVector2 vec = { (int) x, (int) y };
+		IVector2 vec =
+		{ (int) x, (int) y };
 
 		return vec;
 	}
@@ -86,6 +86,5 @@ struct Vector2
 		return sqrt(x * x + y * y);
 	}
 };
-
 
 #endif /* INCLUDE_VECTOR_H_ */

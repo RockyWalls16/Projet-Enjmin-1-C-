@@ -1,20 +1,19 @@
-﻿#include "Player.h"
+﻿#include "entities/EntityPlayer.h"
 #include "Map.h"
-#include "Utils.h"
+#include "utils/Utils.h"
 
-Player::Player(IVector2 p, int ID) : DynamicEntity(p)
-	, m_direction(1)
-	, m_alive(true)
-	, m_canJump(true)
+EntityPlayer::EntityPlayer(IVector2 p, int ID) :
+		EntityDynamic(p), m_direction(1), m_alive(true), m_canJump(true)
 {
 	gravity = 8.5F;
 	hitbox = new AABB(p.x, p.y, p.x + 1, p.y + 2, true);
-	m_charInfos[0].Attributes = m_charInfos[1].Attributes = m_charInfos[2].Attributes = 0x0002;
+	m_charInfos[0].Attributes = m_charInfos[1].Attributes =
+			m_charInfos[2].Attributes = 0x0002;
 
 	m_charInfos[1].Char.AsciiChar = 2;
 	m_charInfos[0].Char.AsciiChar = 31;
 
-	equip(new Weapon(IVector2(0, 0), '<', '>', 10, 0.5, 3));
+	equip(new EntityWeapon(IVector2(0, 0), '<', '>', 10, 0.5, 3));
 
 	// Manage controls
 	if (ID == 0)
@@ -35,12 +34,12 @@ Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	}
 }
 
-Player::~Player()
+EntityPlayer::~EntityPlayer()
 {
-	delete(m_weapon);
+	delete (m_weapon);
 }
 
-void Player::equip(Weapon *newWeapon)
+void EntityPlayer::equip(EntityWeapon *newWeapon)
 {
 	m_weapon = newWeapon;
 
@@ -48,7 +47,7 @@ void Player::equip(Weapon *newWeapon)
 	m_charInfos[2].Char.AsciiChar = m_weapon->getSkins(m_direction == 1);
 }
 
-void Player::die()
+void EntityPlayer::die()
 {
 	m_charInfos[1].Char.AsciiChar = 'X';
 	m_charInfos[0].Char.AsciiChar = 16;
@@ -56,15 +55,15 @@ void Player::die()
 	m_alive = false;
 }
 
-void Player::tick()
+void EntityPlayer::tick()
 {
 	if (m_alive)
 	{
 		/*else if (GetAsyncKeyState(m_ctrlDown))
-		{
-		setVelocity(Vector2(0, 0.000002));
-		m_direction = IVector2(0, 1);
-		}*/
+		 {
+		 setVelocity(Vector2(0, 0.000002));
+		 m_direction = IVector2(0, 1);
+		 }*/
 		if (GetAsyncKeyState(m_ctrlLeft))
 		{
 			velocity.x = -0.8;
@@ -92,23 +91,27 @@ void Player::tick()
 		}
 
 		if (GetAsyncKeyState(m_ctrlFire))
-			m_weapon->fire(IVector2(m_pos.x + m_direction * 2, m_pos.y + 1), m_direction);
+			m_weapon->fire(IVector2(m_pos.x + m_direction * 2, m_pos.y + 1),
+					m_direction);
 
 		m_weapon->tick();
 	}
-	
-	DynamicEntity::tick();
+
+	EntityDynamic::tick();
 }
 
-void Player::render(CHAR_INFO* buffer)
+void EntityPlayer::render(CHAR_INFO* buffer)
 {
 	if (m_alive)
 	{
 		buffer[Map::getMap().getBufferFlatIndex(m_pos)] = m_charInfos[1];
-		buffer[Map::getMap().getBufferFlatIndex(m_pos.x + m_direction, m_pos.y + 1)] = m_charInfos[2];
+		buffer[Map::getMap().getBufferFlatIndex(m_pos.x + m_direction,
+				m_pos.y + 1)] = m_charInfos[2];
 	}
 	else
-		buffer[Map::getMap().getBufferFlatIndex(m_pos.x - 1, m_pos.y + 1)] = m_charInfos[1];
+		buffer[Map::getMap().getBufferFlatIndex(m_pos.x - 1, m_pos.y + 1)] =
+				m_charInfos[1];
 
-	buffer[Map::getMap().getBufferFlatIndex(m_pos.x, m_pos.y + 1)] = m_charInfos[0];
+	buffer[Map::getMap().getBufferFlatIndex(m_pos.x, m_pos.y + 1)] =
+			m_charInfos[0];
 }

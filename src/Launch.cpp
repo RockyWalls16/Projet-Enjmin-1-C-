@@ -5,8 +5,7 @@
 
 #include "Map.h"
 #include "MapParser.h"
-#include "Player.h"
-#include "TimeManager.h"
+#include "utils/TimeManager.h"
 
 bool shallClose;
 void loopGame();
@@ -23,18 +22,18 @@ int main(int argc, char* args[])
 
 void loopGame()
 {
-	if(!(MapParser::loadColorObjectTypes() && MapParser::loadMap("Map_3.tmx")))
+	if (!(MapParser::loadColorObjectTypes() && MapParser::loadMap("Map_3.tmx")))
 	{
 		std::cout << "FAIL" << std::endl;
 	}
 
 	//PlaySound("Assets/bgm.wav", NULL, SND_FILENAME|SND_LOOP|SND_ASYNC);
 
-	while(!shallClose)
+	while (!shallClose)
 	{
 		TimeManager::updateTimer();
 
-		while(TimeManager::shallTick())
+		while (TimeManager::shallTick())
 		{
 			Map::getMap().tick();
 		}

@@ -5,8 +5,7 @@
  *      Author: Valentin
  */
 
-#include "Utils.h"
-
+#include "utils/Utils.h"
 
 int split(vector<string>& tokens, string str, char separator)
 {
@@ -14,7 +13,7 @@ int split(vector<string>& tokens, string str, char separator)
 
 	string::size_type stTemp = str.find(separator);
 
-	while(stTemp != string::npos)
+	while (stTemp != string::npos)
 	{
 		tokens.push_back(str.substr(0, stTemp));
 		str = str.substr(stTemp + 1);

@@ -42,15 +42,16 @@
 
 namespace wcolors
 {
-	WORD getColorAttribute(char foreground, char background = BG_BLACK);
+WORD getColorAttribute(char foreground, char background = BG_BLACK);
 
-	WORD addForeground(char foreground);
+WORD addForeground(char foreground);
 
-	WORD addBackground(char background);
+WORD addBackground(char background);
 
-	WORD getForegroundColor(CHAR_INFO charInfo);
+WORD getForegroundColor(CHAR_INFO charInfo);
 
-	WORD getBackgroundColor(CHAR_INFO charInfo);
-};
+WORD getBackgroundColor(CHAR_INFO charInfo);
+}
+;
 
 #endif

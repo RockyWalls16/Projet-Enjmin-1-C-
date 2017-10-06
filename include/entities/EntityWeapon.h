@@ -1,7 +1,7 @@
 #pragma once
-#include "DynamicEntity.h"
+#include "entities/EntityDynamic.h"
 
-class Weapon : public StaticEntity
+class EntityWeapon: public EntityStatic
 {
 private:
 	CHAR_INFO m_charInfo;
@@ -17,7 +17,8 @@ private:
 	bool m_canFire;
 
 public:
-	Weapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime, float shotSpeed, float shotLifeTime);
+	EntityWeapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime,
+			float shotSpeed, float shotLifeTime);
 
 	virtual void tick() override;
 

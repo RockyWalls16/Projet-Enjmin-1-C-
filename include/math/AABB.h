@@ -8,7 +8,7 @@
 #ifndef AABB_H_
 #define AABB_H_
 
-#include <iostream>
+#include "iostream"
 
 class AABB
 {
@@ -21,7 +21,8 @@ private:
 	bool oneSided;
 
 public:
-	AABB(float x, float y, float x2, float y2, bool blockCollision = false, bool oneSided = false);
+	AABB(float x, float y, float x2, float y2, bool blockCollision = false,
+			bool oneSided = false);
 
 	// Update bounding box position
 	void updatePos(float x, float y);

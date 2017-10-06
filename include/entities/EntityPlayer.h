@@ -1,9 +1,9 @@
 #pragma once
-#include "DynamicEntity.h"
-#include "Projectile.h"
-#include "Weapon.h"
+#include "entities/EntityDynamic.h"
+#include "entities/EntityProjectile.h"
+#include "entities/EntityWeapon.h"
 
-class Player : public DynamicEntity
+class EntityPlayer: public EntityDynamic
 {
 private:
 	CHAR_INFO m_charInfos[3];
@@ -13,13 +13,13 @@ private:
 
 	int m_ctrlUp, m_ctrlDown, m_ctrlLeft, m_ctrlRight, m_ctrlFire;
 
-	Weapon* m_weapon;
+	EntityWeapon* m_weapon;
 
 public:
-	Player(IVector2 p, int ID);
-	~Player();
+	EntityPlayer(IVector2 p, int ID);
+	~EntityPlayer();
 
-	void equip(Weapon *newWeapon);
+	void equip(EntityWeapon *newWeapon);
 	void die();
 
 	virtual void tick() override;

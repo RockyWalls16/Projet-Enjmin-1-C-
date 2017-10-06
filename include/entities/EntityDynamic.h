@@ -9,11 +9,11 @@
 #define DYNAMICENTITY_H_
 
 #pragma once
-#include "StaticEntity.h"
-#include "AABB.h"
-#include "Vector.h"
+#include "entities/EntityStatic.h"
+#include "math/AABB.h"
+#include "math/Vector.h"
 
-class DynamicEntity : public StaticEntity
+class EntityDynamic: public EntityStatic
 {
 protected:
 	float gravity;
@@ -21,10 +21,12 @@ protected:
 	bool onGround;
 
 	virtual void onCollision(Entity* other)
-	{};
+	{
+	}
+	;
 
 public:
-	DynamicEntity(IVector2 p);
+	EntityDynamic(IVector2 p);
 
 	void addVelocity(Vector2 vel)
 	{

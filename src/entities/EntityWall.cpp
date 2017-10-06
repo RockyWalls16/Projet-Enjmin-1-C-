@@ -5,9 +5,10 @@
  *      Author: Valentin
  */
 
-#include <EntityWall.h>
+#include "entities/EntityWall.h"
 
-EntityWall::EntityWall(IVector2 pos, AABB* aabb) : StaticEntity(pos)
+EntityWall::EntityWall(IVector2 pos, AABB* aabb) :
+		EntityStatic(pos)
 {
 	hitbox = aabb;
 }

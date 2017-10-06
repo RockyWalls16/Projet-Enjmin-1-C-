@@ -6,7 +6,7 @@
  */
 
 #include "Map.h"
-#include "Utils.h"
+#include "utils/Utils.h"
 #include <algorithm>
 #include <iostream>
 #include <string>
@@ -24,17 +24,19 @@ void Map::tick()
 	}
 
 	//Spawn queued entities
-	for(Entity* spawned : entityToSpawn)
+	for (Entity* spawned : entityToSpawn)
 	{
 		addEntity(spawned);
 	}
 	entityToSpawn.clear();
 
 	//Despawn queued entities
-	for(Entity* despawned : entityToRemove)
+	for (Entity* despawned : entityToRemove)
 	{
-		entityList.erase(std::remove(entityList.begin(), entityList.end(), despawned), entityList.end());
-		delete(despawned);
+		entityList.erase(
+				std::remove(entityList.begin(), entityList.end(), despawned),
+				entityList.end());
+		delete (despawned);
 	}
 	entityToRemove.clear();
 
@@ -60,40 +62,41 @@ void Map::render()
 	resetBuffer(mapWidth, mapHeight);
 	memcpy(buffer, mapBackground, mapWidth * mapHeight * sizeof(CHAR_INFO));
 
-	for(Entity *e : entityList)
+	for (Entity *e : entityList)
 	{
 		e->render(buffer);
 	}
 
-	WriteConsoleOutput(hOutput, buffer, dwBufferSize,
-					   dwBufferCoord, &rcRegion);
+	WriteConsoleOutput(hOutput, buffer, dwBufferSize, dwBufferCoord, &rcRegion);
 }
 
 void Map::resetBuffer(int bufferWidth, int bufferHeight)
 {
 	// Clear memory
-	if(buffer)
+	if (buffer)
 	{
-		delete(buffer);
+		delete (buffer);
 	}
 
 	buffer = new CHAR_INFO[bufferWidth * bufferHeight];
 
 	hOutput = (HANDLE) GetStdHandle(STD_OUTPUT_HANDLE);
-	dwBufferSize = { (short) bufferWidth , (short) bufferHeight };
-	dwBufferCoord = { 0, 0 };
-	rcRegion = { 0, 0, (short) (bufferWidth - 1), (short) (bufferHeight - 1) };
+	dwBufferSize =
+	{	(short) bufferWidth , (short) bufferHeight};
+	dwBufferCoord =
+	{	0, 0};
+	rcRegion =
+	{	0, 0, (short) (bufferWidth - 1), (short) (bufferHeight - 1)};
 
 	/*CONSOLE_FONT_INFOEX cfi;
-	cfi.cbSize = sizeof(cfi);
-	cfi.nFont = 0;
-	cfi.dwFontSize.X = 8;
-	cfi.dwFontSize.Y = 8;
-	cfi.FontFamily = FF_DONTCARE;
-	cfi.FontWeight = FW_NORMAL;
-	SetCurrentConsoleFontEx(hOutput, FALSE, &cfi);*/
+	 cfi.cbSize = sizeof(cfi);
+	 cfi.nFont = 0;
+	 cfi.dwFontSize.X = 8;
+	 cfi.dwFontSize.Y = 8;
+	 cfi.FontFamily = FF_DONTCARE;
+	 cfi.FontWeight = FW_NORMAL;
+	 SetCurrentConsoleFontEx(hOutput, FALSE, &cfi);*/
 }
-
 
 void Map::initMapBackground(int width, int height)
 {
@@ -104,14 +107,15 @@ void Map::initMapBackground(int width, int height)
 
 	system(command.data());
 
-	SMALL_RECT WinRect = { 0, 0, (short) width, (short) (height + 5) };
+	SMALL_RECT WinRect =
+	{ 0, 0, (short) width, (short) (height + 5) };
 	SMALL_RECT* WinSize = &WinRect;
 	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), true, WinSize);
 
 	// Clear memory
-	if(mapBackground)
+	if (mapBackground)
 	{
-		delete(mapBackground);
+		delete (mapBackground);
 	}
 
 	mapBackground = new CHAR_INFO[width * height];
@@ -149,10 +153,10 @@ void Map::respawnPlayers()
 
 	// Remove every players
 	std::vector<Entity*>::iterator it = entityList.begin();
-	while(it != entityList.end())
+	while (it != entityList.end())
 	{
-		Player* player = dynamic_cast<Player*>(*it);
-		if(player)
+		EntityPlayer* player = dynamic_cast<EntityPlayer*>(*it);
+		if (player)
 		{
 			player->despawn();
 		}
@@ -160,9 +164,9 @@ void Map::respawnPlayers()
 	}
 
 	int id;
-	for(IVector2 spawnPoint : spawnPoints)
+	for (IVector2 spawnPoint : spawnPoints)
 	{
-		Player* player = new Player(spawnPoint, id++);
+		EntityPlayer* player = new EntityPlayer(spawnPoint, id++);
 		player->spawn();
 	}
 }

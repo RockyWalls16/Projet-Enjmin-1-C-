@@ -8,19 +8,22 @@
 #ifndef INCLUDE_STATICENTITY_H_
 #define INCLUDE_STATICENTITY_H_
 
-#include "Entity.h"
-#include "AABB.h"
+#include "entities/Entity.h"
+#include "math/AABB.h"
 
-class StaticEntity : public Entity
+class EntityStatic: public Entity
 {
 protected:
 	AABB* hitbox;
 
 public:
-	StaticEntity(IVector2 pos);
-	virtual ~StaticEntity();
+	EntityStatic(IVector2 pos);
+	virtual ~EntityStatic();
 
-	virtual AABB* getAABB() { return hitbox; }
+	virtual AABB* getAABB()
+	{
+		return hitbox;
+	}
 };
 
 #endif /* INCLUDE_STATICENTITY_H_ */

@@ -8,13 +8,13 @@
 #include "MapParser.h"
 #include "tinyxml2.h"
 #include "Map.h"
-#include "Utils.h"
+#include "utils/Utils.h"
 #include <iostream>
 #include <string>
 #include <stdio.h>
 #include <algorithm>
-#include "EntityWall.h"
-#include "Vector.h"
+#include "entities/EntityWall.h"
+#include "math/Vector.h"
 
 #define MAP_PATH "./Maps/"
 #define TILE_OFFSET 0
@@ -45,7 +45,7 @@ bool MapParser::loadMap(std::string name)
 
 	//Load data layer
 	tinyxml2::XMLElement* layer = mapRoot->FirstChildElement("layer");
-	if(!layer)
+	if (!layer)
 	{
 		return false;
 	}
@@ -59,7 +59,7 @@ bool MapParser::loadMap(std::string name)
 
 	//Decode map background
 	tinyxml2::XMLElement* data = layer->FirstChildElement("data");
-	if(!data)
+	if (!data)
 	{
 		return false;
 	}
@@ -67,23 +67,26 @@ bool MapParser::loadMap(std::string name)
 	std::vector<int> tiles;
 	csvAsTileVector(data->GetText(), tiles);
 
-	for(unsigned int i = 0; i < tiles.size(); i++)
+	for (unsigned int i = 0; i < tiles.size(); i++)
 	{
 		int dataId = tiles[i];
 		int tileId = dataId == 0 ? ' ' : dataId;
 
-		Map::getMap().getMapBackground()[i].Attributes = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN;
+		Map::getMap().getMapBackground()[i].Attributes = FOREGROUND_RED
+				| FOREGROUND_BLUE | FOREGROUND_GREEN;
 		Map::getMap().getMapBackground()[i].Char.AsciiChar = tileId;
 	}
 
 	// Read objects layers
-	tinyxml2::XMLElement* objectLayers = mapRoot->FirstChildElement("objectgroup");
-	while(objectLayers != nullptr)
+	tinyxml2::XMLElement* objectLayers = mapRoot->FirstChildElement(
+			"objectgroup");
+	while (objectLayers != nullptr)
 	{
 
 		// Read objects inside layers
-		tinyxml2::XMLElement* objects = objectLayers->FirstChildElement("object");
-		while(objects != nullptr)
+		tinyxml2::XMLElement* objects = objectLayers->FirstChildElement(
+				"object");
+		while (objects != nullptr)
 		{
 			// Fetch object name
 			const char* name = objects->Attribute("name");
@@ -91,7 +94,7 @@ bool MapParser::loadMap(std::string name)
 			// Invisible objects (For debug)
 			bool visible = true;
 			objects->QueryBoolAttribute("visible", &visible);
-			if(!visible)
+			if (!visible)
 			{
 				objects = objects->NextSiblingElement("object");
 				continue;
@@ -114,17 +117,21 @@ bool MapParser::loadMap(std::string name)
 			width /= 8;
 			height /= 16;
 
-			if(strcmp(name, "Wall") == 0)
+			if (strcmp(name, "Wall") == 0)
 			{
-				EntityWall* wall = new EntityWall(IVector2(xPos, yPos), new AABB(xPos, yPos, xPos + width, yPos + height, true));
+				EntityWall* wall = new EntityWall(IVector2(xPos, yPos),
+						new AABB(xPos, yPos, xPos + width, yPos + height,
+								true));
 				wall->spawn();
 			}
-			else if(strcmp(name, "Platform") == 0)
+			else if (strcmp(name, "Platform") == 0)
 			{
-				EntityWall* wall = new EntityWall(IVector2(xPos, yPos), new AABB(xPos, yPos, xPos + width, yPos + height, true, true));
+				EntityWall* wall = new EntityWall(IVector2(xPos, yPos),
+						new AABB(xPos, yPos, xPos + width, yPos + height, true,
+								true));
 				wall->spawn();
 			}
-			else if(strcmp(name, "Spawn") == 0)
+			else if (strcmp(name, "Spawn") == 0)
 			{
 				IVector2 spawnPoint = IVector2(xPos, yPos);
 				Map::getMap().getSpawnPoints().push_back(spawnPoint);
@@ -135,57 +142,66 @@ bool MapParser::loadMap(std::string name)
 			std::vector<int> filters;
 
 			// If object is color
-			if(type && objectColorTypes.find(type) != objectColorTypes.end())
+			if (type && objectColorTypes.find(type) != objectColorTypes.end())
 			{
 				objectAttribute = objectColorTypes[type];
 				shallChangeAttr = true;
 			}
 
 			//Object contains custom properties ?
-			tinyxml2::XMLElement* customProperties = objects->FirstChildElement("properties");
-			if(customProperties)
+			tinyxml2::XMLElement* customProperties = objects->FirstChildElement(
+					"properties");
+			if (customProperties)
 			{
-				tinyxml2::XMLElement* customProperty = customProperties->FirstChildElement("property");
+				tinyxml2::XMLElement* customProperty =
+						customProperties->FirstChildElement("property");
 
-				while(customProperty != nullptr)
+				while (customProperty != nullptr)
 				{
-					const char* propertyName = customProperty->Attribute("name");
-					const char* propertyType = customProperty->Attribute("type");
+					const char* propertyName = customProperty->Attribute(
+							"name");
+					const char* propertyType = customProperty->Attribute(
+							"type");
 
 					//Is string property
-					if(!propertyType)
+					if (!propertyType)
 					{
 						//Is filter
-						if(strcmp(propertyName, "filter") == 0)
+						if (strcmp(propertyName, "filter") == 0)
 						{
-							csvAsTileVector(customProperty->Attribute("value"), filters);
+							csvAsTileVector(customProperty->Attribute("value"),
+									filters);
 						}
 
-					}//Is boolean property ?
-					else if(strcmp(propertyType, "bool") == 0)
+					} //Is boolean property ?
+					else if (strcmp(propertyType, "bool") == 0)
 					{
 						bool value = false;
 						customProperty->QueryBoolAttribute("value", &value);
-						applyColorForProperty(propertyName, objectAttribute, !value);
+						applyColorForProperty(propertyName, objectAttribute,
+								!value);
 					}
 
 					// Next property
-					customProperty = customProperty->NextSiblingElement("property");
+					customProperty = customProperty->NextSiblingElement(
+							"property");
 				}
 			}
 
-
 			// Apply color changes
-			for(int x = xPos; x < xPos + width; x++)
+			for (int x = xPos; x < xPos + width; x++)
 			{
-				for(int y = yPos; y < yPos + height; y++)
+				for (int y = yPos; y < yPos + height; y++)
 				{
 					int tile = tiles[x + y * mapWidth] - 1;
 
 					// Check filter is not set or if is set and contains correct tile
-					if((filters.size() == 0 || std::find(filters.begin(), filters.end(), tile) != filters.end()) && shallChangeAttr)
+					if ((filters.size() == 0
+							|| std::find(filters.begin(), filters.end(), tile)
+									!= filters.end()) && shallChangeAttr)
 					{
-						Map::getMap().getMapBackground()[Map::getMap().getBufferFlatIndex(x, y)].Attributes = objectAttribute;
+						Map::getMap().getMapBackground()[Map::getMap().getBufferFlatIndex(
+								x, y)].Attributes = objectAttribute;
 					}
 				}
 			}
@@ -210,7 +226,8 @@ bool MapParser::loadColorObjectTypes()
 	// Load and check XML state
 	tinyxml2::XMLDocument objTypesXML;
 
-	tinyxml2::XMLError eResult = objTypesXML.LoadFile((MAP_PATH + std::string("objecttypes.xml")).c_str());
+	tinyxml2::XMLError eResult = objTypesXML.LoadFile(
+			(MAP_PATH + std::string("objecttypes.xml")).c_str());
 	if (eResult != tinyxml2::XML_SUCCESS)
 	{
 		return false;
@@ -223,26 +240,28 @@ bool MapParser::loadColorObjectTypes()
 	}
 
 	//Skip first line
-	tinyxml2::XMLElement* objectsRoot = (tinyxml2::XMLElement*) root->NextSibling();
+	tinyxml2::XMLElement* objectsRoot =
+			(tinyxml2::XMLElement*) root->NextSibling();
 
 	// Read all objects
-	tinyxml2::XMLElement* objects = objectsRoot->FirstChildElement("objecttype");
-	while(objects != nullptr)
+	tinyxml2::XMLElement* objects = objectsRoot->FirstChildElement(
+			"objecttype");
+	while (objects != nullptr)
 	{
 
 		// Read object properties
 		WORD attribute = 0;
 		const char* objectName = objects->Attribute("name");
-		tinyxml2::XMLElement* properties = objects->FirstChildElement("property");
+		tinyxml2::XMLElement* properties = objects->FirstChildElement(
+				"property");
 
-
-		while(properties != nullptr)
+		while (properties != nullptr)
 		{
 			const char* propertyName = properties->Attribute("name");
 			bool value = false;
 			properties->QueryBoolAttribute("default", &value);
 
-			if(value)
+			if (value)
 			{
 				applyColorForProperty(propertyName, attribute);
 			}
@@ -263,39 +282,64 @@ bool MapParser::loadColorObjectTypes()
 	return true;
 }
 
-bool MapParser::applyColorForProperty(const char* propertyName, WORD& attribute, bool removeProperty)
+bool MapParser::applyColorForProperty(const char* propertyName, WORD& attribute,
+		bool removeProperty)
 {
-	if(strcmp(propertyName, "background-intense") == 0)
+	if (strcmp(propertyName, "background-intense") == 0)
 	{
-		attribute = removeProperty ? attribute & ~BACKGROUND_INTENSITY : attribute | BACKGROUND_INTENSITY;
+		attribute =
+				removeProperty ?
+						attribute & ~BACKGROUND_INTENSITY :
+						attribute | BACKGROUND_INTENSITY;
 	}
-	else if(strcmp(propertyName, "background-red") == 0)
+	else if (strcmp(propertyName, "background-red") == 0)
 	{
-		attribute = removeProperty ? attribute & ~BACKGROUND_RED : attribute | BACKGROUND_RED;
+		attribute =
+				removeProperty ?
+						attribute & ~BACKGROUND_RED :
+						attribute | BACKGROUND_RED;
 	}
-	else if(strcmp(propertyName, "background-green") == 0)
+	else if (strcmp(propertyName, "background-green") == 0)
 	{
-		attribute = removeProperty ? attribute & ~BACKGROUND_GREEN : attribute | BACKGROUND_GREEN;
+		attribute =
+				removeProperty ?
+						attribute & ~BACKGROUND_GREEN :
+						attribute | BACKGROUND_GREEN;
 	}
-	else if(strcmp(propertyName, "background-blue") == 0)
+	else if (strcmp(propertyName, "background-blue") == 0)
 	{
-		attribute = removeProperty ? attribute & ~BACKGROUND_BLUE : attribute | BACKGROUND_BLUE;
+		attribute =
+				removeProperty ?
+						attribute & ~BACKGROUND_BLUE :
+						attribute | BACKGROUND_BLUE;
 	}
-	else if(strcmp(propertyName, "intense") == 0)
+	else if (strcmp(propertyName, "intense") == 0)
 	{
-		attribute = removeProperty ? attribute & ~FOREGROUND_INTENSITY : attribute | FOREGROUND_INTENSITY;
+		attribute =
+				removeProperty ?
+						attribute & ~FOREGROUND_INTENSITY :
+						attribute | FOREGROUND_INTENSITY;
 	}
-	else if(strcmp(propertyName, "red") == 0)
+	else if (strcmp(propertyName, "red") == 0)
 	{
-		attribute = removeProperty ? attribute & ~FOREGROUND_RED : attribute | FOREGROUND_RED;
+		attribute =
+				removeProperty ?
+						attribute & ~FOREGROUND_RED :
+						attribute | FOREGROUND_RED;
 	}
-	else if(strcmp(propertyName, "green") == 0)
+	else if (strcmp(propertyName, "green") == 0)
 	{
-		attribute = removeProperty ? attribute & ~FOREGROUND_GREEN : attribute | FOREGROUND_GREEN;
+		attribute =
+				removeProperty ?
+						attribute & ~FOREGROUND_GREEN :
+						attribute | FOREGROUND_GREEN;
 	}
-	else if(strcmp(propertyName, "blue") == 0)
+	else if (strcmp(propertyName, "blue") == 0)
 	{
-		attribute = removeProperty ? attribute & ~FOREGROUND_BLUE : attribute | FOREGROUND_BLUE;
+		attribute =
+				removeProperty ?
+						attribute & ~FOREGROUND_BLUE :
+						attribute | FOREGROUND_BLUE;
 	}
 	else
 	{
@@ -313,7 +357,7 @@ void MapParser::csvAsTileVector(std::string csvData, std::vector<int>& output)
 	split(tokens, csvData, ',');
 	output.reserve(tokens.size());
 
-	for(unsigned int i = 0; i < tokens.size(); i++)
+	for (unsigned int i = 0; i < tokens.size(); i++)
 	{
 		int dataId = atoi(tokens[i].c_str()) - TILE_OFFSET;
 		output.push_back(dataId);

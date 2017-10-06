@@ -6,17 +6,17 @@
  */
 
 #pragma once
+#include "entities/EntityPlayer.h"
 #include <vector>
-#include "Vector.h"
-#include "Player.h"
-#include "Colors.h"
+#include "math/Vector.h"
+#include "utils/Colors.h"
 
 class Map
 {
 private:
 	std::vector<Entity*> entityList;
 
-	HANDLE hOutput = (HANDLE)GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE hOutput = (HANDLE) GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD dwBufferSize;
 	COORD dwBufferCoord;
 	SMALL_RECT rcRegion;
@@ -54,7 +54,6 @@ public:
 
 	void setMapSize(int width, int height);
 	void respawnPlayers();
-
 
 	// Singleton
 	static Map& getMap();

@@ -8,10 +8,10 @@
 #ifndef INCLUDE_ENTITYWALL_H_
 #define INCLUDE_ENTITYWALL_H_
 
-#include "StaticEntity.h"
-#include "AABB.h"
+#include "entities/EntityStatic.h"
+#include "math/AABB.h"
 
-class EntityWall : public StaticEntity
+class EntityWall: public EntityStatic
 {
 public:
 	EntityWall(IVector2 pos, AABB* aabb);

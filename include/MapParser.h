@@ -24,7 +24,8 @@ public:
 	static bool loadColorObjectTypes();
 
 private:
-	static bool applyColorForProperty(const char* property, WORD& attribute, bool removeProperty = false);
+	static bool applyColorForProperty(const char* property, WORD& attribute,
+			bool removeProperty = false);
 
 	static void csvAsTileVector(std::string csvData, std::vector<int>& output);
 };

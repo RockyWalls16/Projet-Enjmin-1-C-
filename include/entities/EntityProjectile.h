@@ -1,8 +1,7 @@
 #pragma once
-#include "DynamicEntity.h"
-#include "Colors.h"
+#include "entities/EntityDynamic.h"
 
-class Projectile : public DynamicEntity
+class EntityProjectile: public EntityDynamic
 {
 private:
 	float m_speed;
@@ -13,7 +12,7 @@ private:
 	virtual void onCollision(Entity* other) override;
 
 public:
-	Projectile(IVector2 p, float speed, int direction, float lifeTime);
+	EntityProjectile(IVector2 p, float speed, int direction, float lifeTime);
 
 	virtual void tick() override;
 	virtual void render(CHAR_INFO* buffer) override;

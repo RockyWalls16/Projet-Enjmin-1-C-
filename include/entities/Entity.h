@@ -1,17 +1,17 @@
 /*
-* GameObject.h
-*
-*  Created on: 2 oct. 2017
-*      Author: Valentin
-*/
+ * GameObject.h
+ *
+ *  Created on: 2 oct. 2017
+ *      Author: Valentin
+ */
 
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
 #pragma once
 #include <windows.h>
-#include "Vector.h"
-#include "AABB.h"
+#include "math/Vector.h"
+#include "math/AABB.h"
 
 class Entity
 {
@@ -26,7 +26,10 @@ public:
 	// Update entity
 	virtual void tick();
 
-	virtual void render(CHAR_INFO* buffer){};
+	virtual void render(CHAR_INFO* buffer)
+	{
+	}
+	;
 
 	// Spawn entity
 	void spawn();
@@ -39,7 +42,10 @@ public:
 		return m_pos;
 	}
 
-	virtual AABB* getAABB() { return nullptr; }
+	virtual AABB* getAABB()
+	{
+		return nullptr;
+	}
 };
 
 #endif /* ENTITY_H_ */
