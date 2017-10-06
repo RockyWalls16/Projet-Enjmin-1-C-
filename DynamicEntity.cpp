@@ -79,4 +79,15 @@ void DynamicEntity::tick()
 	{
 		hitbox->updatePos(m_pos.x, m_pos.y);
 	}
+
+	// Check borders
+	if (m_realPosition.x < 0)
+		m_realPosition.x = Map::getMap().getMapWidth();
+	else if (m_realPosition.x > Map::getMap().getMapWidth())
+		m_realPosition.x = 0;
+
+	if (m_realPosition.y < 0)
+		m_realPosition.y = Map::getMap().getMapHeight() - 1;
+	else if (m_realPosition.y > Map::getMap().getMapHeight())
+		m_realPosition.y = 0;
 }

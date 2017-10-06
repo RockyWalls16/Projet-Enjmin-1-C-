@@ -1,10 +1,11 @@
 #include "Weapon.h"
 #include "Map.h"
 
-Weapon::Weapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime, float shotSpeed) : StaticEntity(p)
+Weapon::Weapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime, float shotSpeed, float shotLifeTime) : StaticEntity(p)
 	, m_leftSkin(leftSkin)
 	, m_rightSkin(rightSkin)
 	, m_shotSpeed(shotSpeed)
+	, m_shotLifeTime(shotLifeTime)
 	, m_reloadTime(shotReloadTime)
 	, m_nextShotReadyTime(0)
 	, m_canFire(true)
@@ -34,6 +35,6 @@ void Weapon::fire(IVector2 pos, int dir)
 	{
 		m_canFire = false;
 		m_nextShotReadyTime = m_reloadTime;
-		Map::getMap().prepareSpawnEntity(new Projectile(pos, m_shotSpeed, dir));
+		Map::getMap().prepareSpawnEntity(new Projectile(pos, m_shotSpeed, dir, m_shotLifeTime));
 	}
 }

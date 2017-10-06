@@ -1,10 +1,12 @@
 #include "Projectile.h"
 #include "Map.h"
 #include "EntityWall.h"
+#include "TimeManager.h"
 
-Projectile::Projectile(IVector2 p, float speed, int direction) : DynamicEntity(p)
+Projectile::Projectile(IVector2 p, float speed, int direction, float lifeTime) : DynamicEntity(p)
 	, m_speed(speed)
 	, m_direction(direction)
+	, m_lifeTime(TICK_PER_SECOND * lifeTime)
 {
 	gravity = 0;
 	hitbox = new AABB(p.x, p.y, p.x+1, p.y+1);
@@ -15,7 +17,9 @@ Projectile::Projectile(IVector2 p, float speed, int direction) : DynamicEntity(p
 
 void Projectile::tick()
 {
-	if (m_pos.x < 0 || m_pos.x > Map::getMap().getMapWidth())
+	m_lifeTime--;
+
+	if (m_lifeTime < 0)
 		despawn();
 
 	setVelocity(Vector2(m_direction * m_speed, 0));
