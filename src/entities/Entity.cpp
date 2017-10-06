@@ -5,8 +5,8 @@
  *      Author: Valentin
  */
 
+#include <map/Map.h>
 #include "entities/Entity.h"
-#include "Map.h"
 
 Entity::Entity(IVector2 pos) :
 		m_pos(pos), m_realPosition(pos.x, pos.y)

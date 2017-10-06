@@ -5,7 +5,7 @@
  *      Author: Valentin
  */
 
-#include "Map.h"
+#include <map/Map.h>
 #include "utils/Utils.h"
 #include <algorithm>
 #include <iostream>

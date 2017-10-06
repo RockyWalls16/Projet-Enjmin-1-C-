@@ -5,9 +5,9 @@
  *      Author: Valentin
  */
 
-#include "MapParser.h"
+#include <map/Map.h>
+#include <map/MapParser.h>
 #include "tinyxml2.h"
-#include "Map.h"
 #include "utils/Utils.h"
 #include <iostream>
 #include <string>

@@ -1,5 +1,5 @@
-﻿#include "entities/EntityPlayer.h"
-#include "Map.h"
+﻿#include <map/Map.h>
+#include "entities/EntityPlayer.h"
 #include "utils/Utils.h"
 
 EntityPlayer::EntityPlayer(IVector2 p, int ID) :

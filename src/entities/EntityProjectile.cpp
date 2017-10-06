@@ -1,5 +1,5 @@
+#include <map/Map.h>
 #include "entities/EntityProjectile.h"
-#include "Map.h"
 #include "entities/EntityWall.h"
 #include "utils/TimeManager.h"
 

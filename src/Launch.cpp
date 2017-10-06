@@ -1,10 +1,10 @@
+#include <map/Map.h>
+#include <map/MapParser.h>
 #include <stdio.h>
 #include <string>
 #include <iostream>
 #include <windows.h>
 
-#include "Map.h"
-#include "MapParser.h"
 #include "utils/TimeManager.h"
 
 bool shallClose;

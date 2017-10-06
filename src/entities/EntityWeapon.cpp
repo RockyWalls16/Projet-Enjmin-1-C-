@@ -1,5 +1,5 @@
+#include <map/Map.h>
 #include "entities/EntityWeapon.h"
-#include "Map.h"
 
 EntityWeapon::EntityWeapon(IVector2 p, char leftSkin, char rightSkin,
 		int shotReloadTime, float shotSpeed, float shotLifeTime) :

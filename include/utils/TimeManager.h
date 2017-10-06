@@ -3,7 +3,7 @@
 
 #define MILLIS_FACTOR 1000.0
 #define NANO_FACTOR 1000000.0
-#define TICK_PER_SECOND 30.0
+#define TICK_PER_SECOND 25.0
 #define TICK_DELAY (1 / TICK_PER_SECOND)
 
 #include <windows.h>

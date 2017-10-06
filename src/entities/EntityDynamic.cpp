@@ -5,8 +5,8 @@
  *      Author: Valentin
  */
 
+#include <map/Map.h>
 #include "entities/EntityDynamic.h"
-#include "Map.h"
 #include "utils/Utils.h"
 #include "utils/TimeManager.h"
 #include <iostream>
