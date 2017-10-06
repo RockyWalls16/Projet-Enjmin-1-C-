@@ -37,7 +37,10 @@ void DynamicEntity::tick()
 				otherEntity->clipX(&velocity.x, *hitbox);
 				
 				if (xVel != velocity.x)
+				{
 					onCollision(entity);
+					xVel = velocity.x;
+				}
 			}
 		}
 
@@ -53,7 +56,10 @@ void DynamicEntity::tick()
 				isGrounded = isGrounded || otherEntity->clipY(&velocity.y, *hitbox);
 
 				if (yVel != velocity.y)
+				{
 					onCollision(entity);
+					yVel = velocity.y;
+				}
 			}
 		}
 	}

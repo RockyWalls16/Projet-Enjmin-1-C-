@@ -7,7 +7,7 @@ Projectile::Projectile(IVector2 p, float speed, int direction) : DynamicEntity(p
 	, m_direction(direction)
 {
 	gravity = 0;
-	hitbox = new AABB(p.x, p.y, p.x+1, p.y+1, true);
+	hitbox = new AABB(p.x, p.y, p.x+1, p.y+1);
 
 	m_charInfo.Attributes = FOREGROUND_INTENSITY;
 	m_charInfo.Char.AsciiChar = '*';
@@ -30,19 +30,16 @@ void Projectile::render(CHAR_INFO * buffer)
 
 void Projectile::onCollision(Entity * other)
 {
-	EntityWall *w = dynamic_cast<EntityWall*>(other);
-
-	if(w != nullptr)
+	if(dynamic_cast<EntityWall*>(other) != nullptr)
 		despawn();
-
-	/*
-	Player *p = dynamic_cast<Player*>(other);
-
-	if (w != nullptr)
+	else
 	{
-		despawn();
-		p->despawn();
+		Player *p = dynamic_cast<Player*>(other);
 
+		if (p != nullptr)
+		{
+			despawn();
+			p->die();
+		}
 	}
-	*/
 }
