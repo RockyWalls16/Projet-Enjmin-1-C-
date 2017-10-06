@@ -167,6 +167,9 @@ void Map::respawnPlayers()
 		it++;
 	}
 
+	Weapon *test = new Weapon(IVector2(20, 20), 'q', 'p', 10, 10, 10);
+	test->spawn();
+
 	int id = 0;
 	for(IVector2 spawnPoint : spawnPoints)
 	{

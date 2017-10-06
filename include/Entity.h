@@ -18,6 +18,7 @@ class Entity
 protected:
 	IVector2 m_pos;
 	Vector2 m_realPosition;
+	bool m_display;
 
 public:
 	Entity(IVector2 pos);
@@ -40,6 +41,12 @@ public:
 	}
 
 	virtual AABB* getAABB() { return nullptr; }
+
+	void disappear();
+	bool isVisible()
+	{
+		return m_display;
+	}
 };
 
 #endif /* ENTITY_H_ */

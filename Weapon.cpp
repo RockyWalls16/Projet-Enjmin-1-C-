@@ -12,6 +12,8 @@ Weapon::Weapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime, fl
 {
 	m_charInfo.Attributes = FOREGROUND_INTENSITY;
 	m_charInfo.Char.AsciiChar = rightSkin;
+
+	hitbox = new AABB(p.x, p.y, p.x + 1, p.y + 1, true);
 }
 
 void Weapon::tick()
@@ -24,9 +26,10 @@ void Weapon::tick()
 	StaticEntity::tick();
 }
 
-void Weapon::drawEntity(CHAR_INFO * buffer)
+void Weapon::render(CHAR_INFO * buffer)
 {
-	buffer[m_pos.x + m_pos.y * Map::getMap().getMapWidth()] = m_charInfo;
+	if(m_display)
+		buffer[Map::getMap().getBufferFlatIndex(m_pos)] = m_charInfo;
 }
 
 void Weapon::fire(IVector2 pos, int dir)
