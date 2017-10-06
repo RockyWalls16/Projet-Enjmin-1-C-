@@ -73,7 +73,7 @@ bool MapParser::loadMap(std::string name)
 		char tileId = dataId < 0 ? ' ' : dataId;
 
 		Map::getMap().getMapBackground()[i].Attributes = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN;
-		Map::getMap().getMapBackground()[i].Char.AsciiChar = tileId;
+		Map::getMap().getMapBackground()[i].Char.UnicodeChar = tileId;
 	}
 
 	// Read objects layers
@@ -108,6 +108,11 @@ bool MapParser::loadMap(std::string name)
 			if(strcmp(name, "Wall") == 0)
 			{
 				EntityWall* wall = new EntityWall(IVector2(xPos, yPos), new AABB(xPos, yPos, xPos + width, yPos + height, true));
+				wall->spawn();
+			}
+			else if(strcmp(name, "Platform") == 0)
+			{
+				EntityWall* wall = new EntityWall(IVector2(xPos, yPos), new AABB(xPos, yPos, xPos + width, yPos + height, true, true));
 				wall->spawn();
 			}
 

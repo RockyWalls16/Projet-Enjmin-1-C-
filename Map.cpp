@@ -80,11 +80,11 @@ void Map::initMapBackground(int width, int height)
 	std::string command("mode ");
 	command.append(std::to_string(width));
 	command.append(",");
-	command.append(std::to_string(height + 6));
+	command.append(std::to_string(height + 5));
 
 	system(command.data());
 
-	SMALL_RECT WinRect = { 0, 0, (short) width, (short) (height + 6) };
+	SMALL_RECT WinRect = { 0, 0, (short) width, (short) (height + 5) };
 	SMALL_RECT* WinSize = &WinRect;
 	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), true, WinSize);
 

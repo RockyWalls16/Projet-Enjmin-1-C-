@@ -23,7 +23,7 @@ int main(int argc, char* args[])
 
 void loopGame()
 {
-	if(!(MapParser::loadColorObjectTypes() && MapParser::loadMap("Map_1.tmx")))
+	if(!(MapParser::loadColorObjectTypes() && MapParser::loadMap("Map_3.tmx")))
 	{
 		std::cout << "FAIL" << std::endl;
 	}

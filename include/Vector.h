@@ -8,6 +8,8 @@
 #ifndef INCLUDE_VECTOR_H_
 #define INCLUDE_VECTOR_H_
 
+#include <math.h>
+
 struct IVector2
 {
 	int x;
@@ -77,6 +79,11 @@ struct Vector2
 	Vector2 operator*(const float a) const
 	{
 		return Vector2(x * a, y * a);
+	}
+
+	float magnitude()
+	{
+		return sqrt(x * x + y * y);
 	}
 };
 
