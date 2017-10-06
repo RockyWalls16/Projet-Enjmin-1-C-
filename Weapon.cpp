@@ -1,4 +1,3 @@
-#pragma once
 #include "Weapon.h"
 #include "Map.h"
 

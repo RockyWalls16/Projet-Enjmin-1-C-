@@ -66,14 +66,14 @@ void Player::tick()
 		}*/
 		if (GetAsyncKeyState(m_ctrlLeft))
 		{
-			setVelocity(Vector2(-0.8, 0));
+			velocity.x = -0.8;
 			m_direction = -1;
 
 			m_charInfos[2].Char.AsciiChar = m_weapon->getSkins(false);
 		}
 		else if (GetAsyncKeyState(m_ctrlRight))
 		{
-			setVelocity(Vector2(0.8, 0));
+			velocity.x = 0.8;
 			m_direction = 1;
 
 			m_charInfos[2].Char.AsciiChar = m_weapon->getSkins(true);
@@ -82,7 +82,7 @@ void Player::tick()
 		if (GetAsyncKeyState(m_ctrlUp) && m_canJump && onGround)
 		{
 			// JUMP
-			addVelocity(Vector2(0, -4));
+			velocity.y = -4;
 			m_canJump = false;
 		}
 		else if (!GetAsyncKeyState(m_ctrlUp))
