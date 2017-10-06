@@ -74,7 +74,7 @@ void Player::tick()
 	}
 
 	if (GetAsyncKeyState(m_ctrlFire))
-		m_weapon->fire(IVector2(m_pos.x + m_direction, m_pos.y + 1), m_direction);
+		m_weapon->fire(IVector2(m_pos.x + m_direction*2, m_pos.y + 1), m_direction);
 
 	m_weapon->tick();
 	DynamicEntity::tick();

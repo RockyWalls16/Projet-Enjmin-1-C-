@@ -20,11 +20,6 @@ DynamicEntity::DynamicEntity(IVector2 p)
 	
 }
 
-DynamicEntity::~DynamicEntity()
-{
-
-}
-
 void DynamicEntity::tick()
 {
 	velocity.y += gravity / TICK_PER_SECOND * (1.6F);
@@ -33,23 +28,33 @@ void DynamicEntity::tick()
 	if(hitbox)
 	{
 		// X Collide
-		for(Entity* entity : Map::getMap().getEntityList())
+		float xVel = velocity.x;
+		for (Entity* entity : Map::getMap().getEntityList())
 		{
 			AABB* otherEntity = entity->getAABB();
-			if(otherEntity != nullptr)
-				if(otherEntity->isBlockCollision())
-					otherEntity->clipX(&velocity.x, *hitbox);
+			if (otherEntity && otherEntity->isBlockCollision())
+			{
+				otherEntity->clipX(&velocity.x, *hitbox);
+				
+				if (xVel != velocity.x)
+					onCollision(entity);
+			}
 		}
 
 		hitbox->updatePos(m_pos.x + (int) velocity.x, m_pos.y);
 
 		// Y Collide
+		float yVel = velocity.y;
 		for(Entity* entity : Map::getMap().getEntityList())
 		{
 			AABB* otherEntity = entity->getAABB();
-			if (otherEntity != nullptr)
-				if(otherEntity->isBlockCollision())
-					isGrounded = isGrounded || otherEntity->clipY(&velocity.y, *hitbox);
+			if (otherEntity && otherEntity->isBlockCollision())
+			{
+				isGrounded = isGrounded || otherEntity->clipY(&velocity.y, *hitbox);
+
+				if (yVel != velocity.y)
+					onCollision(entity);
+			}
 		}
 	}
 

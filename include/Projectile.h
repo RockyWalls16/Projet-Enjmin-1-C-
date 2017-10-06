@@ -8,6 +8,8 @@ private:
 	CHAR_INFO m_charInfo;
 	int m_direction;
 
+	virtual void onCollision(Entity* other) override;
+
 public:
 	Projectile(IVector2 p, float m_speed, int direction);
 
