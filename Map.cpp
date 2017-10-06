@@ -40,7 +40,10 @@ void Map::tick()
 	}
 
 	for (Entity* e : toDelete)
-		delete(e);
+	{
+		if(e)
+			delete(e);
+	}
 
 	entityToRemove.clear();
 }
