@@ -48,12 +48,12 @@ void AABB::clipX(float* motionX, AABB& other)
 	// Check Y is in bound
 	if (!(other.y2 <= y || other.y >= y2) && !oneSided)
 	{
-		if(*motionX > 0 && other.x2 <= x)
+		if(*motionX >= 0 && other.x2 <= x)
 		{
 			float distance = x - other.x2;
 			*motionX = distance < *motionX ? distance : *motionX;
 		}
-		else if(*motionX < 0 && other.x >= x2)
+		else if(*motionX <= 0 && other.x >= x2)
 		{
 			float distance = x2 - other.x;
 			*motionX = distance > *motionX ? distance : *motionX;
@@ -68,14 +68,14 @@ bool AABB::clipY(float* motionY, AABB& other)
 	// Check X is in bound
 	if(!(other.x2 <= x || other.x >= x2))
 	{
-		if(*motionY > 0 && other.y2 <= y)
+		if(*motionY >= 0 && other.y2 <= y)
 		{
 			float distance = y - other.y2;
 			*motionY = distance < *motionY ? distance : *motionY;
 
 			return *motionY == 0;
 		}
-		else if(*motionY < 0 && other.y >= y2 && !oneSided)
+		else if(*motionY <= 0 && other.y >= y2 && !oneSided)
 		{
 			float distance = y2 - other.y;
 			*motionY = distance > *motionY ? distance : *motionY;
