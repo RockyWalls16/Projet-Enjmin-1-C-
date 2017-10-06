@@ -6,7 +6,7 @@ Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	, m_canFire(true)
 	, m_nextShotReadyTime(1)
 {
-	gravity = 4.5F;
+	gravity = 8.5F;
 	hitbox = new AABB(p.x, p.y, p.x + 1, p.y + 2);
 	m_charInfos[0].Attributes = m_charInfos[1].Attributes = m_charInfos[2].Attributes = 0x0002;
 
@@ -55,7 +55,7 @@ void Player::tick()
 	if (GetAsyncKeyState(m_ctrlUp) && onGround)
 	{
 		// JUMP
-		addVelocity(Vector2(0, -4));
+		addVelocity(Vector2(0, -6));
 	}
 	/*else if (GetAsyncKeyState(m_ctrlDown))
 	{

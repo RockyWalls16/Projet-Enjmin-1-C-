@@ -27,7 +27,7 @@ DynamicEntity::~DynamicEntity()
 
 void DynamicEntity::tick()
 {
-	velocity.y += gravity / TICK_PER_SECOND * (1.6F);
+	velocity.y += (gravity / TICK_PER_SECOND) * 1.6F;
 
 	bool isGrounded = false;
 	if(hitbox)
@@ -42,7 +42,8 @@ void DynamicEntity::tick()
 			}
 		}
 
-		hitbox->updatePos(m_pos.x + (int) velocity.x, m_pos.y);
+		hitbox->updatePos(m_pos.x + velocity.x, hitbox->getY());
+
 
 		// Y Collide
 		for(Entity* entity : Map::getMap().getEntityList())
@@ -50,12 +51,16 @@ void DynamicEntity::tick()
 			AABB* otherEntity = entity->getAABB();
 			if(otherEntity->isBlockCollision())
 			{
-				isGrounded = isGrounded || otherEntity->clipY(&velocity.y, *hitbox);
+				isGrounded = isGrounded || (otherEntity->clipY(&velocity.y, *hitbox) && velocity.y >= 0);
 			}
 		}
 	}
 
-	velocity = (velocity * 0.4);
+	velocity = (velocity * 0.6);
+	if(velocity.magnitude() < 0.01F)
+	{
+		velocity = Vector2(0.0F, 0.0F);
+	}
 
 	onGround = isGrounded;
 	m_realPosition = m_realPosition + velocity;

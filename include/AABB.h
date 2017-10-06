@@ -8,23 +8,26 @@
 #ifndef AABB_H_
 #define AABB_H_
 
+#include <iostream>
+
 class AABB
 {
 private:
-	int x;
-	int y;
-	int x2;
-	int y2;
+	float x;
+	float y;
+	float x2;
+	float y2;
 	bool blockCollision;
+	bool oneSided;
 
 public:
-	AABB(int x, int y, int x2, int y2, bool blockCollision = false);
+	AABB(float x, float y, float x2, float y2, bool blockCollision = false, bool oneSided = false);
 
 	// Update bounding box position
-	void updatePos(int x, int y);
+	void updatePos(float x, float y);
 
 	// Update bounding box position with X axis centered
-	void updatePosXCentered(int x, int y);
+	void updatePosXCentered(float x, float y);
 
 	// Check two bounding boxes intersects
 	bool intersect(AABB& other);
@@ -40,25 +43,28 @@ public:
 		return blockCollision;
 	}
 
-	int getX() const
+	float getX() const
 	{
 		return x;
 	}
 
-	int getX2() const
+	float getX2() const
 	{
 		return x2;
 	}
 
-	int getY() const
+	float getY() const
 	{
 		return y;
 	}
 
-	int getY2() const
+	float getY2() const
 	{
 		return y2;
 	}
+
 };
+
+std::ostream& operator<<(std::ostream &strm, AABB const &a);
 
 #endif /* AABB_H_ */
