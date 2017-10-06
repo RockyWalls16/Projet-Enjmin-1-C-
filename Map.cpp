@@ -31,13 +31,21 @@ void Map::tick()
 	entityToSpawn.clear();
 
 	//Despawn queued entities
+	std::vector<Entity*> toDelete;
+
 	for(Entity* despawned : entityToRemove)
 	{
 		entityList.erase(std::remove(entityList.begin(), entityList.end(), despawned), entityList.end());
-		delete(despawned);
+		toDelete.push_back(despawned);
 	}
-	entityToRemove.clear();
 
+	for (Entity* e : toDelete)
+	{
+		if(e)
+			delete(e);
+	}
+
+	entityToRemove.clear();
 }
 
 void Map::addEntity(Entity *e)
@@ -159,7 +167,10 @@ void Map::respawnPlayers()
 		it++;
 	}
 
-	int id;
+	Weapon *test = new Weapon(IVector2(20, 20), 'q', 'p', 10, 10, 10);
+	test->spawn();
+
+	int id = 0;
 	for(IVector2 spawnPoint : spawnPoints)
 	{
 		Player* player = new Player(spawnPoint, id++);

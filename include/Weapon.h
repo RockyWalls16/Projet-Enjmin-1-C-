@@ -21,7 +21,7 @@ public:
 
 	virtual void tick() override;
 
-	virtual void drawEntity(CHAR_INFO* buffer);
+	virtual void render(CHAR_INFO* buffer) override;
 
 	void fire(IVector2 pos, int dir);
 

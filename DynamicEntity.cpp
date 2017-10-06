@@ -31,10 +31,10 @@ void DynamicEntity::tick()
 		float xVel = velocity.x;
 		for (Entity* entity : Map::getMap().getEntityList())
 		{
-			AABB* otherEntity = entity->getAABB();
-			if (otherEntity && otherEntity->isBlockCollision())
+			AABB* otherHitbox = entity->getAABB();
+			if (otherHitbox && otherHitbox->isBlockCollision() && entity->isVisible())
 			{
-				otherEntity->clipX(&velocity.x, *hitbox);
+				otherHitbox->clipX(&velocity.x, *hitbox);
 				
 				if (xVel != velocity.x)
 				{
@@ -51,10 +51,10 @@ void DynamicEntity::tick()
 		float yVel = velocity.y;
 		for(Entity* entity : Map::getMap().getEntityList())
 		{
-			AABB* otherEntity = entity->getAABB();
-			if (otherEntity && otherEntity->isBlockCollision())
+			AABB* otherHitbox = entity->getAABB();
+			if (otherHitbox && otherHitbox->isBlockCollision() && entity->isVisible())
 			{
-				isGrounded = isGrounded || (otherEntity->clipY(&velocity.y, *hitbox) && velocity.y >= 0);
+				isGrounded = isGrounded || (otherHitbox->clipY(&velocity.y, *hitbox) && velocity.y >= 0);
 
 				if (yVel != velocity.y)
 				{

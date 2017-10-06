@@ -34,3 +34,8 @@ void Entity::despawn()
 {
 	Map::getMap().removeEntity(this);
 }
+
+void Entity::disappear()
+{
+	m_display = false;
+}

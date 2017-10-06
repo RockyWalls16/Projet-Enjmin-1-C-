@@ -2,6 +2,17 @@
 #include "Map.h"
 #include "Utils.h"
 
+void Player::onCollision(Entity * other)
+{
+	Weapon* otherWeapon = dynamic_cast<Weapon*>(other);
+
+	if (otherWeapon != nullptr)
+	{
+		equip(otherWeapon);
+		otherWeapon->disappear();
+	}
+}
+
 Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	, m_direction(1)
 	, m_alive(true)
@@ -94,7 +105,8 @@ void Player::tick()
 		if (GetAsyncKeyState(m_ctrlFire))
 			m_weapon->fire(IVector2(m_pos.x + m_direction * 2, m_pos.y + 1), m_direction);
 
-		m_weapon->tick();
+		if(m_weapon)
+			m_weapon->tick();
 	}
 	
 	DynamicEntity::tick();

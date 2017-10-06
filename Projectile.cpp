@@ -9,7 +9,7 @@ Projectile::Projectile(IVector2 p, float speed, int direction, float lifeTime) :
 	, m_lifeTime(TICK_PER_SECOND * lifeTime)
 {
 	gravity = 0;
-	hitbox = new AABB(p.x, p.y, p.x+1, p.y+1);
+	hitbox = new AABB(p.x, p.y, p.x+1, p.y+1, true);
 
 	m_charInfo.Attributes = FOREGROUND_INTENSITY;
 	m_charInfo.Char.AsciiChar = '*';
@@ -34,8 +34,15 @@ void Projectile::render(CHAR_INFO * buffer)
 
 void Projectile::onCollision(Entity * other)
 {
+	Projectile* otherProj = dynamic_cast<Projectile*>(other);
+
 	if(dynamic_cast<EntityWall*>(other) != nullptr)
 		despawn();
+	else if (otherProj != nullptr)
+	{
+		otherProj->despawn();
+		despawn();
+	}
 	else
 	{
 		Player *p = dynamic_cast<Player*>(other);

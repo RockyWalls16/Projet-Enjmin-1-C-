@@ -15,6 +15,8 @@ private:
 
 	Weapon* m_weapon;
 
+	virtual void onCollision(Entity* other) override;
+
 public:
 	Player(IVector2 p, int ID);
 	~Player();
