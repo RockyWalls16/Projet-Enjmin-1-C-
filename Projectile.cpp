@@ -1,10 +1,14 @@
 #include "Projectile.h"
 #include "Map.h"
+#include "EntityWall.h"
 
 Projectile::Projectile(IVector2 p, float speed, int direction) : DynamicEntity(p)
 	, m_speed(speed)
 	, m_direction(direction)
 {
+	gravity = 0;
+	hitbox = new AABB(p.x, p.y, p.x+1, p.y+1);
+
 	m_charInfo.Attributes = FOREGROUND_INTENSITY;
 	m_charInfo.Char.AsciiChar = '*';
 }
@@ -22,4 +26,20 @@ void Projectile::tick()
 void Projectile::render(CHAR_INFO * buffer)
 {
 	buffer[Map::getMap().getBufferFlatIndex(m_pos)] = m_charInfo;
+}
+
+void Projectile::onCollision(Entity * other)
+{
+	if(dynamic_cast<EntityWall*>(other) != nullptr)
+		despawn();
+	else
+	{
+		Player *p = dynamic_cast<Player*>(other);
+
+		if (p != nullptr)
+		{
+			despawn();
+			p->die();
+		}
+	}
 }

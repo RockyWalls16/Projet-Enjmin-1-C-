@@ -20,6 +20,9 @@ protected:
 	Vector2 velocity;
 	bool onGround;
 
+	virtual void onCollision(Entity* other)
+	{};
+
 public:
 	DynamicEntity(IVector2 p);
 
@@ -38,7 +41,6 @@ public:
 		return velocity;
 	}
 
-	virtual ~DynamicEntity();
 	virtual void tick() override;
 };
 
