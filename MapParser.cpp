@@ -124,6 +124,11 @@ bool MapParser::loadMap(std::string name)
 				EntityWall* wall = new EntityWall(IVector2(xPos, yPos), new AABB(xPos, yPos, xPos + width, yPos + height, true, true));
 				wall->spawn();
 			}
+			else if(strcmp(name, "Spawn") == 0)
+			{
+				IVector2 spawnPoint = IVector2(xPos, yPos);
+				Map::getMap().getSpawnPoints().push_back(spawnPoint);
+			}
 
 			WORD objectAttribute;
 			bool shallChangeAttr = false;
@@ -296,6 +301,8 @@ bool MapParser::applyColorForProperty(const char* propertyName, WORD& attribute,
 	{
 		return false;
 	}
+
+	Map::getMap().respawnPlayers();
 
 	return true;
 }

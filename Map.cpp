@@ -6,6 +6,7 @@
  */
 
 #include "Map.h"
+#include "Utils.h"
 #include <algorithm>
 #include <iostream>
 #include <string>
@@ -22,11 +23,21 @@ void Map::tick()
 		e->tick();
 	}
 
-	if (entityToSpawn != nullptr)
-		addEntity(entityToSpawn);
+	//Spawn queued entities
+	for(Entity* spawned : entityToSpawn)
+	{
+		addEntity(spawned);
+	}
+	entityToSpawn.clear();
 
-	if (entityToRemove != nullptr)
-		entityList.erase(std::remove(entityList.begin(), entityList.end(), entityToRemove), entityList.end());
+	//Despawn queued entities
+	for(Entity* despawned : entityToRemove)
+	{
+		entityList.erase(std::remove(entityList.begin(), entityList.end(), despawned), entityList.end());
+		delete(despawned);
+	}
+	entityToRemove.clear();
+
 }
 
 void Map::addEntity(Entity *e)
@@ -36,12 +47,12 @@ void Map::addEntity(Entity *e)
 
 void Map::prepareSpawnEntity(Entity * e)
 {
-	entityToSpawn = e;
+	entityToSpawn.push_back(e);
 }
 
 void Map::removeEntity(Entity* e)
 {
-	entityToRemove = e;
+	entityToRemove.push_back(e);
 }
 
 void Map::render()
@@ -122,6 +133,31 @@ void Map::setMapSize(int width, int height)
 {
 	mapWidth = width;
 	mapHeight = height;
+}
+
+void Map::respawnPlayers()
+{
+	entityToRemove.clear();
+	entityToSpawn.clear();
+
+	// Remove every players
+	std::vector<Entity*>::iterator it = entityList.begin();
+	while(it != entityList.end())
+	{
+		Player* player = dynamic_cast<Player*>(*it);
+		if(player)
+		{
+			player->despawn();
+		}
+		it++;
+	}
+
+	int id;
+	for(IVector2 spawnPoint : spawnPoints)
+	{
+		Player* player = new Player(spawnPoint, id++);
+		player->spawn();
+	}
 }
 
 Map& Map::getMap()

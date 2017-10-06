@@ -7,6 +7,7 @@
 
 #pragma once
 #include <vector>
+#include "Vector.h"
 #include "Player.h"
 
 class Map
@@ -23,8 +24,9 @@ private:
 	int mapWidth;
 	int mapHeight;
 
-	Entity* entityToSpawn;
-	Entity* entityToRemove;
+	std::vector<Entity*> entityToSpawn;
+	std::vector<Entity*> entityToRemove;
+	std::vector<IVector2> spawnPoints;
 
 public:
 	virtual ~Map();
@@ -50,6 +52,7 @@ public:
 	void initMapBackground(int width, int height);
 
 	void setMapSize(int width, int height);
+	void respawnPlayers();
 
 
 	// Singleton
@@ -78,5 +81,10 @@ public:
 	const std::vector<Entity*>& getEntityList() const
 	{
 		return entityList;
+	}
+
+	std::vector<IVector2>& getSpawnPoints()
+	{
+		return spawnPoints;
 	}
 };
