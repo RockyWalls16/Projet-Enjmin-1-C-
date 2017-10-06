@@ -9,6 +9,7 @@ private:
 	char m_leftSkin, m_rightSkin;
 
 	float m_shotSpeed;
+	float m_shotLifeTime;
 
 	float m_reloadTime;
 	float m_nextShotReadyTime;
@@ -16,7 +17,7 @@ private:
 	bool m_canFire;
 
 public:
-	Weapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime, float shotSpeed);
+	Weapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime, float shotSpeed, float shotLifeTime);
 
 	virtual void tick() override;
 

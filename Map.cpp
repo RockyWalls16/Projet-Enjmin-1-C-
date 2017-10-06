@@ -120,8 +120,15 @@ void Map::initMapBackground(int width, int height)
 
 int Map::getBufferFlatIndex(int x, int y)
 {
-	int index = y * mapWidth + x;
-	return index < 0 || index > mapWidth * mapHeight ? 0 : index;
+	int yOffset = 0;
+
+	if (x >= mapWidth)
+		yOffset--;
+	else if (x < 0)
+		yOffset++;
+
+	int index = (y + yOffset) * mapWidth + x;
+	return index < 0 || index >= mapWidth * mapHeight ? 0 : index;
 }
 
 int Map::getBufferFlatIndex(IVector2 position)

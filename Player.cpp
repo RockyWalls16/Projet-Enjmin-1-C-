@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 #include "Map.h"
+#include "Utils.h"
 
 Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	, m_direction(1)
@@ -13,7 +14,7 @@ Player::Player(IVector2 p, int ID) : DynamicEntity(p)
 	m_charInfos[1].Char.AsciiChar = 2;
 	m_charInfos[0].Char.AsciiChar = 31;
 
-	equip(new Weapon(IVector2(0, 0), '<', '>', 10, 0.5));
+	equip(new Weapon(IVector2(0, 0), '<', '>', 10, 0.5, 3));
 
 	// Manage controls
 	if (ID == 0)
@@ -101,17 +102,6 @@ void Player::tick()
 
 void Player::render(CHAR_INFO* buffer)
 {
-	// Check borders
-	if (m_pos.x < 0)
-		m_realPosition.x = Map::getMap().getMapWidth();
-	else if (m_pos.x > Map::getMap().getMapWidth())
-		m_realPosition.x = 0;
-
-	if (m_pos.y < 0)
-		m_realPosition.y = Map::getMap().getMapHeight() - 1;
-	else if (m_pos.y > Map::getMap().getMapHeight())
-		m_realPosition.y = 0;
-		
 	if (m_alive)
 	{
 		buffer[Map::getMap().getBufferFlatIndex(m_pos)] = m_charInfos[1];
