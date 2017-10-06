@@ -1,5 +1,6 @@
 #pragma once
 #include "DynamicEntity.h"
+#include "Colors.h"
 
 class Projectile : public DynamicEntity
 {
