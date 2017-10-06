@@ -17,7 +17,7 @@
 #include "Vector.h"
 
 #define MAP_PATH "./Maps/"
-#define TILE_OFFSET 20
+#define TILE_OFFSET 0
 
 std::map<std::string, WORD> MapParser::objectColorTypes;
 
@@ -70,10 +70,10 @@ bool MapParser::loadMap(std::string name)
 	for(unsigned int i = 0; i < tiles.size(); i++)
 	{
 		int dataId = tiles[i];
-		char tileId = dataId < 0 ? ' ' : dataId;
+		int tileId = dataId == 0 ? ' ' : dataId;
 
 		Map::getMap().getMapBackground()[i].Attributes = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN;
-		Map::getMap().getMapBackground()[i].Char.UnicodeChar = tileId;
+		Map::getMap().getMapBackground()[i].Char.AsciiChar = tileId;
 	}
 
 	// Read objects layers
@@ -87,6 +87,15 @@ bool MapParser::loadMap(std::string name)
 		{
 			// Fetch object name
 			const char* name = objects->Attribute("name");
+
+			// Invisible objects (For debug)
+			bool visible = true;
+			objects->QueryBoolAttribute("visible", &visible);
+			if(!visible)
+			{
+				objects = objects->NextSiblingElement("object");
+				continue;
+			}
 
 			// Fetch object type
 			const char* type = objects->Attribute("type");
@@ -117,12 +126,14 @@ bool MapParser::loadMap(std::string name)
 			}
 
 			WORD objectAttribute;
+			bool shallChangeAttr = false;
 			std::vector<int> filters;
 
 			// If object is color
 			if(type && objectColorTypes.find(type) != objectColorTypes.end())
 			{
 				objectAttribute = objectColorTypes[type];
+				shallChangeAttr = true;
 			}
 
 			//Object contains custom properties ?
@@ -167,7 +178,7 @@ bool MapParser::loadMap(std::string name)
 					int tile = tiles[x + y * mapWidth] - 1;
 
 					// Check filter is not set or if is set and contains correct tile
-					if(filters.size() == 0 || std::find(filters.begin(), filters.end(), tile) != filters.end())
+					if((filters.size() == 0 || std::find(filters.begin(), filters.end(), tile) != filters.end()) && shallChangeAttr)
 					{
 						Map::getMap().getMapBackground()[Map::getMap().getBufferFlatIndex(x, y)].Attributes = objectAttribute;
 					}

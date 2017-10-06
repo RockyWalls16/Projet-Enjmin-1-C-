@@ -72,6 +72,15 @@ void Map::resetBuffer(int bufferWidth, int bufferHeight)
 	dwBufferSize = { (short) bufferWidth , (short) bufferHeight };
 	dwBufferCoord = { 0, 0 };
 	rcRegion = { 0, 0, (short) (bufferWidth - 1), (short) (bufferHeight - 1) };
+
+	/*CONSOLE_FONT_INFOEX cfi;
+	cfi.cbSize = sizeof(cfi);
+	cfi.nFont = 0;
+	cfi.dwFontSize.X = 8;
+	cfi.dwFontSize.Y = 8;
+	cfi.FontFamily = FF_DONTCARE;
+	cfi.FontWeight = FW_NORMAL;
+	SetCurrentConsoleFontEx(hOutput, FALSE, &cfi);*/
 }
 
 
