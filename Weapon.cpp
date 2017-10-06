@@ -1,6 +1,6 @@
 #pragma once
 #include "Weapon.h"
-#include "Map.h";
+#include "Map.h"
 
 Weapon::Weapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime, float shotSpeed) : StaticEntity(p)
 	, m_leftSkin(leftSkin)

@@ -116,7 +116,7 @@ bool MapParser::loadMap(std::string name)
 				wall->spawn();
 			}
 
-			WORD objectAttribute;
+			WORD objectAttribute = 0;
 			std::vector<int> filters;
 
 			// If object is color
