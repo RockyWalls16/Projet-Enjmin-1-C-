@@ -1,7 +1,8 @@
-#include "utils/TimeManager.h"
 #include <windows.h>
 #include <iostream>
 #include <sys/timeb.h>
+#include "utils/TimeManager.h"
+#include "utils/Utils.h";
 
 unsigned int TimeManager::fps = 0;
 unsigned int TimeManager::lastFps = 0;
@@ -23,8 +24,7 @@ void TimeManager::updateTimer()
 
 	struct timeb time = getTimeMillis();
 
-	delta = ((time.time * 1000 + time.millitm)
-			- (lastTime.time * 1000 + lastTime.millitm)) / MILLIS_FACTOR;
+	delta = ((time.time * 1000 + time.millitm) - (lastTime.time * 1000 + lastTime.millitm)) / MILLIS_FACTOR;
 
 	secondProgress += delta;
 	tickTime += delta;
@@ -34,6 +34,9 @@ void TimeManager::updateTimer()
 	// FPS calculation
 	if (secondProgress >= 1.0)
 	{
+		setLogLine(4);
+		std::cout << "FPS:" << TimeManager::getFps() << "  ";
+
 		lastFps = fps;
 		secondProgress = 0.0;
 		fps = 0;

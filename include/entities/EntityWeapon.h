@@ -17,12 +17,11 @@ private:
 	bool m_canFire;
 
 public:
-	EntityWeapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime,
-			float shotSpeed, float shotLifeTime);
+	EntityWeapon(IVector2 p, char leftSkin, char rightSkin, int shotReloadTime, float shotSpeed, float shotLifeTime);
 
 	virtual void tick() override;
 
-	virtual void drawEntity(CHAR_INFO* buffer);
+	virtual void render(BufferRenderer * buffer) override;
 
 	void fire(IVector2 pos, int dir);
 

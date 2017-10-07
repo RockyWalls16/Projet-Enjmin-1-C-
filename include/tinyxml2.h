@@ -122,16 +122,9 @@ class StrPair
 public:
 	enum
 	{
-		NEEDS_ENTITY_PROCESSING = 0x01,
-		NEEDS_NEWLINE_NORMALIZATION = 0x02,
-		NEEDS_WHITESPACE_COLLAPSING = 0x04,
+		NEEDS_ENTITY_PROCESSING = 0x01, NEEDS_NEWLINE_NORMALIZATION = 0x02, NEEDS_WHITESPACE_COLLAPSING = 0x04,
 
-		TEXT_ELEMENT = NEEDS_ENTITY_PROCESSING | NEEDS_NEWLINE_NORMALIZATION,
-		TEXT_ELEMENT_LEAVE_ENTITIES = NEEDS_NEWLINE_NORMALIZATION,
-		ATTRIBUTE_NAME = 0,
-		ATTRIBUTE_VALUE = NEEDS_ENTITY_PROCESSING | NEEDS_NEWLINE_NORMALIZATION,
-		ATTRIBUTE_VALUE_LEAVE_ENTITIES = NEEDS_NEWLINE_NORMALIZATION,
-		COMMENT = NEEDS_NEWLINE_NORMALIZATION
+		TEXT_ELEMENT = NEEDS_ENTITY_PROCESSING | NEEDS_NEWLINE_NORMALIZATION, TEXT_ELEMENT_LEAVE_ENTITIES = NEEDS_NEWLINE_NORMALIZATION, ATTRIBUTE_NAME = 0, ATTRIBUTE_VALUE = NEEDS_ENTITY_PROCESSING | NEEDS_NEWLINE_NORMALIZATION, ATTRIBUTE_VALUE_LEAVE_ENTITIES = NEEDS_NEWLINE_NORMALIZATION, COMMENT = NEEDS_NEWLINE_NORMALIZATION
 	};
 
 	StrPair() :
@@ -165,8 +158,7 @@ public:
 
 	void SetStr(const char* str, int flags = 0);
 
-	char* ParseText(char* in, const char* endTag, int strFlags,
-			int* curLineNumPtr);
+	char* ParseText(char* in, const char* endTag, int strFlags, int* curLineNumPtr);
 	char* ParseName(char* in);
 
 	void TransferTo(StrPair* other);
@@ -316,7 +308,7 @@ private:
 			int newAllocated = cap * 2;
 			T* newMem = new T[newAllocated];
 			TIXMLASSERT(newAllocated >= _size);
-			memcpy(newMem, _mem, sizeof(T) * _size);// warning: not using constructors, only works for PODs
+			memcpy(newMem, _mem, sizeof(T) * _size); // warning: not using constructors, only works for PODs
 			if (_mem != _pool)
 			{
 				delete[] _mem;
@@ -361,8 +353,7 @@ class MemPoolT: public MemPool
 {
 public:
 	MemPoolT() :
-			_root(0), _currentAllocs(0), _nAllocs(0), _maxAllocs(0), _nUntracked(
-					0)
+			_root(0), _currentAllocs(0), _nAllocs(0), _maxAllocs(0), _nUntracked(0)
 	{
 	}
 	~MemPoolT()
@@ -440,10 +431,7 @@ public:
 	}
 	void Trace(const char* name)
 	{
-		printf(
-				"Mempool %s watermark=%d [%dk] current=%d size=%d nAlloc=%d blocks=%d\n",
-				name, _maxAllocs, _maxAllocs * ITEM_SIZE / 1024, _currentAllocs,
-				ITEM_SIZE, _nAllocs, _blockPtrs.Size());
+		printf("Mempool %s watermark=%d [%dk] current=%d size=%d nAlloc=%d blocks=%d\n", name, _maxAllocs, _maxAllocs * ITEM_SIZE / 1024, _currentAllocs, ITEM_SIZE, _nAllocs, _blockPtrs.Size());
 	}
 
 	void SetTracked()
@@ -532,8 +520,7 @@ public:
 	}
 
 	/// Visit an element.
-	virtual bool VisitEnter(const XMLElement& /*element*/,
-			const XMLAttribute* /*firstAttribute*/)
+	virtual bool VisitEnter(const XMLElement& /*element*/, const XMLAttribute* /*firstAttribute*/)
 	{
 		return true;
 	}
@@ -568,13 +555,7 @@ public:
 // WARNING: must match XMLDocument::_errorNames[]
 enum XMLError
 {
-	XML_SUCCESS = 0,
-	XML_NO_ATTRIBUTE,
-	XML_WRONG_ATTRIBUTE_TYPE,
-	XML_ERROR_FILE_NOT_FOUND,
-	XML_ERROR_FILE_COULD_NOT_BE_OPENED,
-	XML_ERROR_FILE_READ_ERROR,
-	UNUSED_XML_ERROR_ELEMENT_MISMATCH,	// remove at next major version
+	XML_SUCCESS = 0, XML_NO_ATTRIBUTE, XML_WRONG_ATTRIBUTE_TYPE, XML_ERROR_FILE_NOT_FOUND, XML_ERROR_FILE_COULD_NOT_BE_OPENED, XML_ERROR_FILE_READ_ERROR, UNUSED_XML_ERROR_ELEMENT_MISMATCH,	// remove at next major version
 	XML_ERROR_PARSING_ELEMENT,
 	XML_ERROR_PARSING_ATTRIBUTE,
 	UNUSED_XML_ERROR_IDENTIFYING_TAG,	// remove at next major version
@@ -615,8 +596,7 @@ public:
 	}
 	static char* SkipWhiteSpace(char* p, int* curLineNumPtr)
 	{
-		return const_cast<char*>(SkipWhiteSpace(const_cast<const char*>(p),
-				curLineNumPtr));
+		return const_cast<char*>(SkipWhiteSpace(const_cast<const char*>(p), curLineNumPtr));
 	}
 
 	// Anything in the high order range of UTF-8 is assumed to not be whitespace. This isn't
@@ -646,7 +626,7 @@ public:
 	}
 
 	inline static bool StringEqual(const char* p, const char* q, int nChar =
-			INT_MAX)
+	INT_MAX)
 	{
 		if (p == q)
 		{
@@ -667,8 +647,7 @@ public:
 	// p is the starting location,
 	// the UTF-8 value of the entity will be placed in value, and length filled in.
 	static const char* GetCharacterRef(const char* p, char* value, int* length);
-	static void ConvertUTF32ToUTF8(unsigned long input, char* output,
-			int* length);
+	static void ConvertUTF32ToUTF8(unsigned long input, char* output, int* length);
 
 	// converts primitive types to strings
 	static void ToStr(int v, char* buffer, int bufferSize);
@@ -691,8 +670,7 @@ public:
 	// unless you have a special testing or compatibility need.
 	// Be careful: static, global, & not thread safe.
 	// Be sure to set static const memory as parameters.
-	static void SetBoolSerialization(const char* writeTrue,
-			const char* writeFalse);
+	static void SetBoolSerialization(const char* writeTrue, const char* writeFalse);
 
 private:
 	static const char* writeBoolTrue;
@@ -856,8 +834,7 @@ public:
 
 	XMLElement* FirstChildElement(const char* name = 0)
 	{
-		return const_cast<XMLElement*>(const_cast<const XMLNode*>(this)->FirstChildElement(
-				name));
+		return const_cast<XMLElement*>(const_cast<const XMLNode*>(this)->FirstChildElement(name));
 	}
 
 	/// Get the last child node, or null if none exists.
@@ -878,8 +855,7 @@ public:
 
 	XMLElement* LastChildElement(const char* name = 0)
 	{
-		return const_cast<XMLElement*>(const_cast<const XMLNode*>(this)->LastChildElement(
-				name));
+		return const_cast<XMLElement*>(const_cast<const XMLNode*>(this)->LastChildElement(name));
 	}
 
 	/// Get the previous (left) sibling node of this node.
@@ -898,8 +874,7 @@ public:
 
 	XMLElement* PreviousSiblingElement(const char* name = 0)
 	{
-		return const_cast<XMLElement*>(const_cast<const XMLNode*>(this)->PreviousSiblingElement(
-				name));
+		return const_cast<XMLElement*>(const_cast<const XMLNode*>(this)->PreviousSiblingElement(name));
 	}
 
 	/// Get the next (right) sibling node of this node.
@@ -918,8 +893,7 @@ public:
 
 	XMLElement* NextSiblingElement(const char* name = 0)
 	{
-		return const_cast<XMLElement*>(const_cast<const XMLNode*>(this)->NextSiblingElement(
-				name));
+		return const_cast<XMLElement*>(const_cast<const XMLNode*>(this)->NextSiblingElement(name));
 	}
 
 	/**
@@ -1431,8 +1405,7 @@ public:
 	 */
 	int IntAttribute(const char* name, int defaultValue = 0) const;
 	/// See IntAttribute()
-	unsigned UnsignedAttribute(const char* name,
-			unsigned defaultValue = 0) const;
+	unsigned UnsignedAttribute(const char* name, unsigned defaultValue = 0) const;
 	/// See IntAttribute()
 	int64_t Int64Attribute(const char* name, int64_t defaultValue = 0) const;
 	/// See IntAttribute()
@@ -1777,8 +1750,7 @@ private:
 
 	XMLAttribute* FindAttribute(const char* name)
 	{
-		return const_cast<XMLAttribute*>(const_cast<const XMLElement*>(this)->FindAttribute(
-				name));
+		return const_cast<XMLAttribute*>(const_cast<const XMLElement*>(this)->FindAttribute(name));
 	}
 	XMLAttribute* FindOrCreateAttribute(const char* name);
 	//void LinkAttribute( XMLAttribute* attrib );
@@ -1812,8 +1784,7 @@ class TINYXML2_LIB XMLDocument: public XMLNode
 	friend class XMLElement;
 public:
 	/// constructor
-	XMLDocument(bool processEntities = true, Whitespace whitespaceMode =
-			PRESERVE_WHITESPACE);
+	XMLDocument(bool processEntities = true, Whitespace whitespaceMode = PRESERVE_WHITESPACE);
 	~XMLDocument();
 
 	virtual XMLDocument* ToDocument()
@@ -1970,8 +1941,7 @@ public:
 	 */
 	void DeleteNode(XMLNode* node);
 
-	void SetError(XMLError error, const char* str1, const char* str2,
-			int lineNum);
+	void SetError(XMLError error, const char* str1, const char* str2, int lineNum);
 
 	void ClearError()
 	{
@@ -2067,8 +2037,7 @@ private:
 };
 
 template<class NodeType, int PoolElementSize>
-inline NodeType* XMLDocument::CreateUnlinkedNode(
-		MemPoolT<PoolElementSize>& pool)
+inline NodeType* XMLDocument::CreateUnlinkedNode(MemPoolT<PoolElementSize>& pool)
 {
 	TIXMLASSERT(sizeof( NodeType ) == PoolElementSize);
 	TIXMLASSERT(sizeof( NodeType ) == pool.ItemSize());
@@ -2414,8 +2383,7 @@ public:
 		return true;
 	}
 
-	virtual bool VisitEnter(const XMLElement& element,
-			const XMLAttribute* attribute);
+	virtual bool VisitEnter(const XMLElement& element, const XMLAttribute* attribute);
 	virtual bool VisitExit(const XMLElement& element);
 
 	virtual bool Visit(const XMLText& text);
@@ -2468,7 +2436,7 @@ protected:
 	DynArray<const char*, 10> _stack;
 
 private:
-	void PrintString(const char*, bool restrictedEntitySet);// prints out, after detecting entities.
+	void PrintString(const char*, bool restrictedEntitySet);	// prints out, after detecting entities.
 
 	bool _firstElement;
 	FILE* _fp;

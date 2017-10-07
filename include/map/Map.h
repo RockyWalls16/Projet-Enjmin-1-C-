@@ -6,34 +6,27 @@
  */
 
 #pragma once
-#include "entities/EntityPlayer.h"
 #include <vector>
+#include "entities/EntityPlayer.h"
 #include "math/Vector.h"
 #include "utils/Colors.h"
+#include "BufferRenderer.h"
 
 class Map
 {
 private:
-	std::vector<Entity*> entityList;
-
-	HANDLE hOutput = (HANDLE) GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD dwBufferSize;
-	COORD dwBufferCoord;
-	SMALL_RECT rcRegion;
-	CHAR_INFO* buffer;
-	CHAR_INFO* mapBackground;
 	int mapWidth;
 	int mapHeight;
+	BufferRenderer* mapBackground;
 
+	std::vector<Entity*> entityList;
 	std::vector<Entity*> entityToSpawn;
 	std::vector<Entity*> entityToRemove;
 	std::vector<IVector2> spawnPoints;
 
 public:
+	Map(int width, int height);
 	virtual ~Map();
-
-	// Reset buffer
-	void resetBuffer(int bufferWidth, int bufferHeight);
 
 	// Update map and all entities
 	void tick();
@@ -44,29 +37,10 @@ public:
 
 	// Remove entity from the map
 	void removeEntity(Entity *e);
-	void render();
-
-	// Retrieves an index for 2 coords
-	int getBufferFlatIndex(int x, int y);
-	int getBufferFlatIndex(IVector2 position);
-
-	void initMapBackground(int width, int height);
+	void render(BufferRenderer* bufferRenderer);
 
 	void setMapSize(int width, int height);
-	void respawnPlayers();
-
-	// Singleton
-	static Map& getMap();
-
-	CHAR_INFO* getMapBackground() const
-	{
-		return mapBackground;
-	}
-
-	CHAR_INFO* getBuffer() const
-	{
-		return buffer;
-	}
+	void spawnPlayers();
 
 	int getMapHeight() const
 	{
@@ -86,5 +60,10 @@ public:
 	std::vector<IVector2>& getSpawnPoints()
 	{
 		return spawnPoints;
+	}
+
+	BufferRenderer* getMapBackground() const
+	{
+		return mapBackground;
 	}
 };

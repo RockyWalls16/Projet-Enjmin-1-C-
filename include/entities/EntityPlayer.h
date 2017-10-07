@@ -23,6 +23,6 @@ public:
 	void die();
 
 	virtual void tick() override;
-	virtual void render(CHAR_INFO* buffer) override;
+	virtual void render(BufferRenderer* buffer) override;
 };
 

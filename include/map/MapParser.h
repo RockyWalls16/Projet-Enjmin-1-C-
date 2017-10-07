@@ -12,6 +12,7 @@
 #include <vector>
 #include <map>
 #include <windows.h>
+#include "map/Map.h"
 
 class MapParser
 {
@@ -19,13 +20,12 @@ private:
 	static std::map<std::string, WORD> objectColorTypes;
 
 public:
-	static bool loadMap(std::string name);
+	static Map* loadMap(std::string name);
 
 	static bool loadColorObjectTypes();
 
 private:
-	static bool applyColorForProperty(const char* property, WORD& attribute,
-			bool removeProperty = false);
+	static bool applyColorForProperty(const char* property, WORD& attribute, bool removeProperty = false);
 
 	static void csvAsTileVector(std::string csvData, std::vector<int>& output);
 };

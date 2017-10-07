@@ -3,10 +3,9 @@
 #include "entities/EntityWall.h"
 #include "utils/TimeManager.h"
 
-EntityProjectile::EntityProjectile(IVector2 p, float speed, int direction,
-		float lifeTime) :
+EntityProjectile::EntityProjectile(IVector2 p, float speed, int direction, float lifeTime) :
 		EntityDynamic(p), m_speed(speed), m_direction(direction), m_lifeTime(
-				TICK_PER_SECOND * lifeTime)
+		TICK_PER_SECOND * lifeTime)
 {
 	gravity = 0;
 	hitbox = new AABB(p.x, p.y, p.x + 1, p.y + 1);
@@ -27,9 +26,9 @@ void EntityProjectile::tick()
 	EntityDynamic::tick();
 }
 
-void EntityProjectile::render(CHAR_INFO * buffer)
+void EntityProjectile::render(BufferRenderer* buffer)
 {
-	buffer[Map::getMap().getBufferFlatIndex(m_pos)] = m_charInfo;
+	buffer->setCharAt(m_pos.x, m_pos.y, m_charInfo);
 }
 
 void EntityProjectile::onCollision(Entity * other)

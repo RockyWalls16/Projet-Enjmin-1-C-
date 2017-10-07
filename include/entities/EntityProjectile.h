@@ -1,5 +1,6 @@
 #pragma once
 #include "entities/EntityDynamic.h"
+#include "BufferRenderer.h"
 
 class EntityProjectile: public EntityDynamic
 {
@@ -15,6 +16,6 @@ public:
 	EntityProjectile(IVector2 p, float speed, int direction, float lifeTime);
 
 	virtual void tick() override;
-	virtual void render(CHAR_INFO* buffer) override;
+	virtual void render(BufferRenderer* buffer) override;
 };
 

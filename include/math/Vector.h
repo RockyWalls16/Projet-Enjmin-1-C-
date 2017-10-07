@@ -55,8 +55,7 @@ struct Vector2
 
 	IVector2 asIVector2()
 	{
-		IVector2 vec =
-		{ (int) x, (int) y };
+		IVector2 vec = { (int) x, (int) y };
 
 		return vec;
 	}

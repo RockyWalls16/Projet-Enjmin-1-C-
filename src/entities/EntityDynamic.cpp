@@ -5,15 +5,14 @@
  *      Author: Valentin
  */
 
-#include <map/Map.h>
+#include <iostream>
+#include "GameController.h"
 #include "entities/EntityDynamic.h"
 #include "utils/Utils.h"
 #include "utils/TimeManager.h"
-#include <iostream>
 
 EntityDynamic::EntityDynamic(IVector2 p) :
-		EntityStatic(p), gravity(0), velocity(
-		{ 0.0, 0.0 }), onGround(false)
+		EntityStatic(p), gravity(0), velocity( { 0.0, 0.0 }), onGround(false)
 {
 
 }
@@ -27,7 +26,7 @@ void EntityDynamic::tick()
 	{
 		// X Collide
 		float xVel = velocity.x;
-		for (Entity* entity : Map::getMap().getEntityList())
+		for (Entity* entity : GameController::getInstance().getCurrentMap()->getEntityList())
 		{
 			AABB* otherEntity = entity->getAABB();
 			if (otherEntity && otherEntity->isBlockCollision())
@@ -46,14 +45,12 @@ void EntityDynamic::tick()
 
 		// Y Collide
 		float yVel = velocity.y;
-		for (Entity* entity : Map::getMap().getEntityList())
+		for (Entity* entity : GameController::getInstance().getCurrentMap()->getEntityList())
 		{
 			AABB* otherEntity = entity->getAABB();
 			if (otherEntity && otherEntity->isBlockCollision())
 			{
-				isGrounded = isGrounded
-						|| (otherEntity->clipY(&velocity.y, *hitbox)
-								&& velocity.y >= 0);
+				isGrounded = isGrounded || (otherEntity->clipY(&velocity.y, *hitbox) && velocity.y >= 0);
 
 				if (yVel != velocity.y)
 				{
@@ -81,12 +78,19 @@ void EntityDynamic::tick()
 
 	// Check borders
 	if (m_realPosition.x < 0)
-		m_realPosition.x = Map::getMap().getMapWidth();
-	else if (m_realPosition.x >= Map::getMap().getMapWidth())
+	{
+		m_realPosition.x = GameController::getInstance().getCurrentMap()->getMapWidth();
+	}
+	else if (m_realPosition.x >= GameController::getInstance().getCurrentMap()->getMapWidth())
+	{
 		m_realPosition.x = 0;
-
+	}
 	if (m_realPosition.y < 0)
-		m_realPosition.y = Map::getMap().getMapHeight() - 1;
-	else if (m_realPosition.y >= Map::getMap().getMapHeight())
+	{
+		m_realPosition.y = GameController::getInstance().getCurrentMap()->getMapHeight() - 1;
+	}
+	else if (m_realPosition.y >= GameController::getInstance().getCurrentMap()->getMapHeight())
+	{
 		m_realPosition.y = 0;
+	}
 }

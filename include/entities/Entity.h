@@ -12,6 +12,7 @@
 #include <windows.h>
 #include "math/Vector.h"
 #include "math/AABB.h"
+#include "BufferRenderer.h"
 
 class Entity
 {
@@ -26,10 +27,7 @@ public:
 	// Update entity
 	virtual void tick();
 
-	virtual void render(CHAR_INFO* buffer)
-	{
-	}
-	;
+	virtual void render(BufferRenderer* bufferRenderer){};
 
 	// Spawn entity
 	void spawn();

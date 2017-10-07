@@ -10,10 +10,8 @@
 #include "utils/TimeManager.h"
 #include <iostream>
 
-AABB::AABB(float x, float y, float x2, float y2, bool blockCollision,
-		bool oneSided) :
-		x(x), y(y), x2(x2), y2(y2), blockCollision(blockCollision), oneSided(
-				oneSided)
+AABB::AABB(float x, float y, float x2, float y2, bool blockCollision, bool oneSided) :
+		x(x), y(y), x2(x2), y2(y2), blockCollision(blockCollision), oneSided(oneSided)
 {
 }
 
@@ -89,6 +87,5 @@ bool AABB::clipY(float* motionY, AABB& other)
 
 std::ostream& operator<<(std::ostream &strm, AABB const &a)
 {
-	return strm << "[" << a.getX() << "," << a.getY() << "->" << a.getX2()
-			<< "," << a.getY2() << "]";
+	return strm << "[" << a.getX() << "," << a.getY() << "->" << a.getX2() << "," << a.getY2() << "]";
 }

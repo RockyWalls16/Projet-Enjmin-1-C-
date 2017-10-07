@@ -5,11 +5,11 @@
  *      Author: Valentin
  */
 
-#include <map/Map.h>
+#include "GameController.h"
 #include "entities/Entity.h"
+#include <iostream>
 
-Entity::Entity(IVector2 pos) :
-		m_pos(pos), m_realPosition(pos.x, pos.y)
+Entity::Entity(IVector2 pos) : m_pos(pos), m_realPosition(pos.x, pos.y)
 {
 
 }
@@ -26,10 +26,10 @@ void Entity::tick()
 
 void Entity::spawn()
 {
-	Map::getMap().addEntity(this);
+	GameController::getInstance().getCurrentMap()->prepareSpawnEntity(this);
 }
 
 void Entity::despawn()
 {
-	Map::getMap().removeEntity(this);
+	GameController::getInstance().getCurrentMap()->removeEntity(this);
 }
