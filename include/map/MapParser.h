@@ -22,6 +22,8 @@ private:
 public:
 	static Map* loadMap(std::string name);
 
+	static BufferRenderer* loadMapData(std::string name, Map** outputMap, bool shallOutputMap = false);
+
 	static bool loadColorObjectTypes();
 
 private:

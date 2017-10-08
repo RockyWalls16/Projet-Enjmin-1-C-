@@ -8,10 +8,17 @@
 #include "BufferRenderer.h"
 #include "GameRenderer.h"
 #include "utils/Utils.h"
+#include "utils/Colors.h"
 
 BufferRenderer::BufferRenderer(int width, int height)
 {
 	buffer = new CHAR_INFO[width * height];
+	for(int i = 0; i < width * height; i++)
+	{
+		buffer[i].Char.AsciiChar = ' ';
+		buffer[i].Attributes = WHITE | BG_BLACK;
+	}
+
 	bufferSize = { (short) width, (short) height};
 	bufferCoords = {0, 0};
 }
@@ -71,7 +78,7 @@ void BufferRenderer::applyBuffer(int dstX, int dstY, int dstW, int dstH, BufferR
 
 		for(; i < lastRow; i++)
 		{
-			memcpy(&buffer[flatIndex(dstX < 0 ? 0 : dstX, i)], &subBuffer->buffer[subBuffer->flatIndex(dstX < 0 ? -dstX : 0, dstY < 0 ? i - dstY : i)], dstFinalWidth * sizeof(CHAR_INFO));
+			memcpy(&buffer[flatIndex(dstX < 0 ? 0 : dstX, i)], &subBuffer->buffer[subBuffer->flatIndex(dstX < 0 ? -dstX : 0, dstY < 0 ? i - dstY : i - dstY)], dstFinalWidth * sizeof(CHAR_INFO));
 		}
 	}
 }

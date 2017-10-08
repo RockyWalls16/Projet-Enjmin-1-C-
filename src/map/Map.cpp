@@ -11,7 +11,7 @@
 #include "map/Map.h"
 #include "utils/Utils.h"
 
-Map::Map(int width, int height)
+Map::Map(int width, int height, BufferRenderer* mapBackground) : mapBackground(mapBackground)
 {
 	setMapSize(width, height);
 }
@@ -72,7 +72,6 @@ void Map::setMapSize(int width, int height)
 {
 	mapWidth = width;
 	mapHeight = height;
-	mapBackground = new BufferRenderer(width, height);
 }
 
 void Map::spawnPlayers()

@@ -3,14 +3,14 @@
 #include "entities/EntityWall.h"
 #include "utils/TimeManager.h"
 
-EntityProjectile::EntityProjectile(IVector2 p, float speed, int direction, float lifeTime) :
+EntityProjectile::EntityProjectile(IVector2 p, EntityPlayer* shooter, float speed, int direction, float lifeTime) :
 		EntityDynamic(p), m_speed(speed), m_direction(direction), m_lifeTime(
-		TICK_PER_SECOND * lifeTime)
+		TICK_PER_SECOND * lifeTime), shooter(shooter)
 {
 	gravity = 0;
 	hitbox = new AABB(p.x, p.y, p.x + 1, p.y + 1);
 
-	m_charInfo.Attributes = FOREGROUND_INTENSITY;
+	m_charInfo.Attributes = shooter->getPlayerColor();
 	m_charInfo.Char.AsciiChar = '*';
 }
 
@@ -39,7 +39,7 @@ void EntityProjectile::onCollision(Entity * other)
 	{
 		EntityPlayer *p = dynamic_cast<EntityPlayer*>(other);
 
-		if (p != nullptr)
+		if (p)
 		{
 			despawn();
 			p->die();

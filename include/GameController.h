@@ -24,12 +24,19 @@ public:
 
 	void loopGame();
 
+	void setMap(std::string mapName);
+
 	Map* getCurrentMap() const
 	{
 		return currentMap;
 	}
 
 	static GameController& getInstance();
+
+	void setShallClose(bool shallClose)
+	{
+		this->shallClose = shallClose;
+	}
 };
 
 #endif /* INCLUDE_GAMECONTROLLER_H_ */

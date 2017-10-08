@@ -29,6 +29,6 @@ void setLogLine(int y)
 {
 	COORD coord;
 	coord.X = 0;
-	coord.Y = y + 25;
+	coord.Y = y + 30;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }

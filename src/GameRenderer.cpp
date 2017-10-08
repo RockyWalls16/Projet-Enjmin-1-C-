@@ -10,6 +10,7 @@
 #include "GameController.h"
 #include "utils/Utils.h"
 #include "utils/TimeManager.h"
+#include "gui/GUI.h"
 
 GameRenderer::GameRenderer(): renderBuffer(nullptr), backgroundBuffer(nullptr), emptyBuffer(nullptr)
 {
@@ -21,11 +22,11 @@ void GameRenderer::initRenderBuffer(int width, int height)
 	std::string command("mode ");
 	command.append(std::to_string(width));
 	command.append(",");
-	command.append(std::to_string(height + 5));
+	command.append(std::to_string(height));
 
 	system(command.data());
 
-	SMALL_RECT winRect = { 0, 0, (short) width, (short) (height + 5) };
+	SMALL_RECT winRect = { 0, 0, (short) width, (short) (height) };
 	SMALL_RECT* winSize = &winRect;
 	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), true, winSize);
 
@@ -58,9 +59,20 @@ void GameRenderer::renderGame()
 		replaceBackgroundBuffer(map->getMapBackground());
 	}
 
-	renderBuffer->applyBuffer(0, 0, backgroundBuffer->getWidth(), backgroundBuffer->getHeight(), backgroundBuffer);
+	if(backgroundBuffer)
+	{
+		renderBuffer->applyBuffer(0, 0, backgroundBuffer->getWidth(), backgroundBuffer->getHeight(), backgroundBuffer);
+	}
 
-	GameController::getInstance().getCurrentMap()->render(renderBuffer);
+	if(map)
+	{
+		GameController::getInstance().getCurrentMap()->render(renderBuffer);
+	}
+
+	for(GUI* gui : openGUIs)
+	{
+		gui->renderGUI(renderBuffer);
+	}
 
 	renderBuffer->renderBuffer(0, 0, renderBuffer->getWidth(), renderBuffer->getHeight());
 }

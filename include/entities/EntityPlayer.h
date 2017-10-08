@@ -2,10 +2,15 @@
 #include "entities/EntityDynamic.h"
 #include "entities/EntityProjectile.h"
 #include "entities/EntityWeapon.h"
+#include <windows.h>
+#include "utils/Colors.h"
 
 class EntityPlayer: public EntityDynamic
 {
 private:
+	static WORD playerColors[4];
+
+	int id;
 	CHAR_INFO m_charInfos[3];
 	int m_direction;
 	bool m_alive;
@@ -24,5 +29,10 @@ public:
 
 	virtual void tick() override;
 	virtual void render(BufferRenderer* buffer) override;
+	
+	WORD getPlayerColor()
+	{
+		return playerColors[id];
+	}
 };
 

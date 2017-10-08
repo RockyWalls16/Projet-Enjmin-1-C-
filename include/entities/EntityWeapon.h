@@ -1,6 +1,8 @@
 #pragma once
 #include "entities/EntityDynamic.h"
 
+class EntityPlayer;
+
 class EntityWeapon: public EntityStatic
 {
 private:
@@ -23,7 +25,7 @@ public:
 
 	virtual void render(BufferRenderer * buffer) override;
 
-	void fire(IVector2 pos, int dir);
+	void fire(IVector2 pos, EntityPlayer* shooter, int dir);
 
 	inline char getSkins(bool right = false)
 	{

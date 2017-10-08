@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sys/timeb.h>
 #include "utils/TimeManager.h"
-#include "utils/Utils.h";
+#include "utils/Utils.h"
 
 unsigned int TimeManager::fps = 0;
 unsigned int TimeManager::lastFps = 0;
@@ -34,9 +34,6 @@ void TimeManager::updateTimer()
 	// FPS calculation
 	if (secondProgress >= 1.0)
 	{
-		setLogLine(4);
-		std::cout << "FPS:" << TimeManager::getFps() << "  ";
-
 		lastFps = fps;
 		secondProgress = 0.0;
 		fps = 0;

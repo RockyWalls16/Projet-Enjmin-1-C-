@@ -25,7 +25,7 @@ private:
 	std::vector<IVector2> spawnPoints;
 
 public:
-	Map(int width, int height);
+	Map(int width, int height, BufferRenderer* mapBackground);
 	virtual ~Map();
 
 	// Update map and all entities

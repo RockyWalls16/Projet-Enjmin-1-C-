@@ -2,17 +2,19 @@
 #include "entities/EntityPlayer.h"
 #include "utils/Utils.h"
 
+WORD EntityPlayer::playerColors[4] = { RED, CYAN, GREEN, YELLOW };
+
 EntityPlayer::EntityPlayer(IVector2 p, int ID) :
-		EntityDynamic(p), m_direction(1), m_alive(true), m_canJump(true)
+		EntityDynamic(p), id(ID), m_direction(1), m_alive(true), m_canJump(true)
 {
 	gravity = 8.5F;
 	hitbox = new AABB(p.x, p.y, p.x + 1, p.y + 2, true);
-	m_charInfos[0].Attributes = m_charInfos[1].Attributes = m_charInfos[2].Attributes = 0x0002;
 
 	m_charInfos[1].Char.AsciiChar = 2;
 	m_charInfos[0].Char.AsciiChar = 31;
+	m_charInfos[0].Attributes = m_charInfos[1].Attributes = m_charInfos[2].Attributes = EntityPlayer::playerColors[ID % 4];
 
-	equip(new EntityWeapon(IVector2(0, 0), '<', '>', 10, 0.5, 3));
+	equip(new EntityWeapon(IVector2(0, 0), '<', '>', 10, 2, 6));
 
 	// Manage controls
 	if (ID == 0)
@@ -65,14 +67,14 @@ void EntityPlayer::tick()
 		 }*/
 		if (GetAsyncKeyState(m_ctrlLeft))
 		{
-			velocity.x = -0.8;
+			velocity.x = -1.0;
 			m_direction = -1;
 
 			m_charInfos[2].Char.AsciiChar = m_weapon->getSkins(false);
 		}
 		else if (GetAsyncKeyState(m_ctrlRight))
 		{
-			velocity.x = 0.8;
+			velocity.x = 1.0;
 			m_direction = 1;
 
 			m_charInfos[2].Char.AsciiChar = m_weapon->getSkins(true);
@@ -90,7 +92,7 @@ void EntityPlayer::tick()
 		}
 
 		if (GetAsyncKeyState(m_ctrlFire))
-			m_weapon->fire(IVector2(m_pos.x + m_direction * 2, m_pos.y + 1), m_direction);
+			m_weapon->fire(IVector2(m_pos.x + m_direction * 2, m_pos.y + 1), this, m_direction);
 
 		m_weapon->tick();
 	}

@@ -23,13 +23,13 @@ void EntityWeapon::render(BufferRenderer * buffer)
 	//buffer->setCharAt(m_pos.x + m_pos.y * Map::getMap().getMapWidth(), m_charInfo);
 }
 
-void EntityWeapon::fire(IVector2 pos, int dir)
+void EntityWeapon::fire(IVector2 pos, EntityPlayer* shooter, int dir)
 {
 	if (m_canFire)
 	{
 		m_canFire = false;
 		m_nextShotReadyTime = m_reloadTime;
-		EntityProjectile* projectile = new EntityProjectile(pos, m_shotSpeed, dir, m_shotLifeTime);
+		EntityProjectile* projectile = new EntityProjectile(pos, shooter, m_shotSpeed, dir, m_shotLifeTime);
 		projectile->spawn();
 	}
 }

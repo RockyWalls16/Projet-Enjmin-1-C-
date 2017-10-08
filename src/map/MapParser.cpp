@@ -30,6 +30,81 @@ Map* MapParser::loadMap(std::string name)
 	Map* map = nullptr;
 
 	// Try to load conventional map
+	if(loadMapData(name, &map, true))
+	{
+		return map;
+	}
+
+	std::cout << "FAIL" << std::endl;
+	return nullptr;
+}
+
+bool MapParser::loadColorObjectTypes()
+{
+	std::cout << "Loading colors...";
+
+	try
+	{
+		// Load and check XML state
+		tinyxml2::XMLDocument objTypesXML;
+
+		tinyxml2::XMLError a_error = objTypesXML.LoadFile((MAP_PATH + std::string("objecttypes.xml")).c_str());
+		if(a_error != tinyxml2::XML_SUCCESS)
+		{
+			std::cout << "FAIL" << std::endl;
+			return false;
+		}
+
+		tinyxml2::XMLNode* root = objTypesXML.FirstChild();
+		//Skip first line
+		tinyxml2::XMLElement* objectsRoot = (tinyxml2::XMLElement*) root->NextSibling();
+
+		// Read all objects
+		tinyxml2::XMLElement* objects = objectsRoot->FirstChildElement("objecttype");
+		while (objects != nullptr)
+		{
+
+			// Read object properties
+			WORD attribute = 0;
+			const char* objectName = objects->Attribute("name");
+			tinyxml2::XMLElement* properties = objects->FirstChildElement("property");
+
+			while (properties != nullptr)
+			{
+				const char* propertyName = properties->Attribute("name");
+				bool value = false;
+				properties->QueryBoolAttribute("default", &value);
+
+				if (value)
+				{
+					applyColorForProperty(propertyName, attribute);
+				}
+
+				// Next property
+				properties = properties->NextSiblingElement("property");
+			}
+
+			// Add object type to object type list
+			objectColorTypes[objectName] = attribute;
+
+			// Next object
+			objects = objects->NextSiblingElement("objecttype");
+		}
+
+		std::cout << "DONE" << std::endl;
+
+		return true;
+	}
+	catch(...)
+	{
+		std::cout << "FAIL" << std::endl;
+		return false;
+	}
+}
+
+
+BufferRenderer* MapParser::loadMapData(std::string name, Map** outputMap, bool shallOutputMap)
+{
 	try
 	{
 		// Load and check XML state
@@ -45,10 +120,19 @@ Map* MapParser::loadMap(std::string name)
 		tinyxml2::XMLElement* layer = mapRoot->FirstChildElement("layer");
 
 		// Retrieves map size
-		int mapWidth, mapHeight;
+		int mapWidth;
+		int mapHeight;
 		mapRoot->QueryIntAttribute("width", &mapWidth);
 		mapRoot->QueryIntAttribute("height", &mapHeight);
-		map = new Map(mapWidth, mapHeight);
+		BufferRenderer* buffer = new BufferRenderer(mapWidth, mapHeight);
+		Map* map = nullptr;
+
+		if(shallOutputMap)
+		{
+			*outputMap = new Map(mapWidth, mapHeight, buffer);
+			map = *outputMap;
+		}
+
 
 		//Decode map background
 
@@ -65,8 +149,8 @@ Map* MapParser::loadMap(std::string name)
 			int dataId = tiles[i];
 			int tileId = dataId == 0 ? ' ' : dataId;
 
-			map->getMapBackground()->getCharAt(x, y).Attributes = WHITE;
-			map->getMapBackground()->getCharAt(x, y).Char.AsciiChar = tileId;
+			buffer->getCharAt(x, y).Attributes = WHITE;
+			buffer->getCharAt(x, y).Char.AsciiChar = tileId;
 		}
 
 		// Read objects layers
@@ -107,20 +191,23 @@ Map* MapParser::loadMap(std::string name)
 				width /= 8;
 				height /= 16;
 
-				if (strcmp(name, "Wall") == 0)
+				if(shallOutputMap)
 				{
-					EntityWall* wall = new EntityWall(IVector2(xPos, yPos), new AABB(xPos, yPos, xPos + width, yPos + height, true));
-					map->addEntity(wall);
-				}
-				else if (strcmp(name, "Platform") == 0)
-				{
-					EntityWall* wall = new EntityWall(IVector2(xPos, yPos), new AABB(xPos, yPos, xPos + width, yPos + height, true, true));
-					map->addEntity(wall);
-				}
-				else if (strcmp(name, "Spawn") == 0)
-				{
-					IVector2 spawnPoint = IVector2(xPos, yPos);
-					map->getSpawnPoints().push_back(spawnPoint);
+					if (strcmp(name, "Wall") == 0)
+					{
+						EntityWall* wall = new EntityWall(IVector2(xPos, yPos), new AABB(xPos, yPos, xPos + width, yPos + height, true));
+						map->addEntity(wall);
+					}
+					else if (strcmp(name, "Platform") == 0)
+					{
+						EntityWall* wall = new EntityWall(IVector2(xPos, yPos), new AABB(xPos, yPos, xPos + width, yPos + height, true, true));
+						map->addEntity(wall);
+					}
+					else if (strcmp(name, "Spawn") == 0)
+					{
+						IVector2 spawnPoint = IVector2(xPos, yPos);
+						map->getSpawnPoints().push_back(spawnPoint);
+					}
 				}
 
 				WORD objectAttribute;
@@ -177,7 +264,7 @@ Map* MapParser::loadMap(std::string name)
 						// Check filter is not set or if is set and contains correct tile
 						if ((filters.size() == 0 || std::find(filters.begin(), filters.end(), tile) != filters.end()) && shallChangeAttr)
 						{
-							map->getMapBackground()->getCharAt(x, y).Attributes = objectAttribute;
+							buffer->getCharAt(x, y).Attributes = objectAttribute;
 						}
 					}
 				}
@@ -189,77 +276,12 @@ Map* MapParser::loadMap(std::string name)
 			// Next object layer
 			objectLayers = objectLayers->NextSiblingElement("objectgroup");
 		}
-		std::cout << "DONE" << std::endl;
 
-		return map;
+		return buffer;
 	}
 	catch(...)
 	{
-		if(map)
-		{
-			delete(map);
-		}
-
-		std::cout << "FAIL" << std::endl;
 		return nullptr;
-	}
-}
-
-bool MapParser::loadColorObjectTypes()
-{
-	std::cout << "Loading colors...";
-
-	try
-	{
-		// Load and check XML state
-		tinyxml2::XMLDocument objTypesXML;
-
-		objTypesXML.LoadFile((MAP_PATH + std::string("objecttypes.xml")).c_str());
-
-		tinyxml2::XMLNode* root = objTypesXML.FirstChild();
-		//Skip first line
-		tinyxml2::XMLElement* objectsRoot = (tinyxml2::XMLElement*) root->NextSibling();
-
-		// Read all objects
-		tinyxml2::XMLElement* objects = objectsRoot->FirstChildElement("objecttype");
-		while (objects != nullptr)
-		{
-
-			// Read object properties
-			WORD attribute = 0;
-			const char* objectName = objects->Attribute("name");
-			tinyxml2::XMLElement* properties = objects->FirstChildElement("property");
-
-			while (properties != nullptr)
-			{
-				const char* propertyName = properties->Attribute("name");
-				bool value = false;
-				properties->QueryBoolAttribute("default", &value);
-
-				if (value)
-				{
-					applyColorForProperty(propertyName, attribute);
-				}
-
-				// Next property
-				properties = properties->NextSiblingElement("property");
-			}
-
-			// Add object type to object type list
-			objectColorTypes[objectName] = attribute;
-
-			// Next object
-			objects = objects->NextSiblingElement("objecttype");
-		}
-
-		std::cout << "DONE" << std::endl;
-
-		return true;
-	}
-	catch(...)
-	{
-		std::cout << "FAIL" << std::endl;
-		return false;
 	}
 }
 
