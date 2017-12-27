@@ -75,7 +75,7 @@
   <object id="54" name="Spawn" x="112" y="128"/>
   <object id="55" name="Spawn" x="456" y="112"/>
  </objectgroup>
- <objectgroup name="Calque d'objets 2" visible="0">
+ <objectgroup name="Calque d'objets 2">
   <object id="1" name="Star layer 4" type="Dark_Gray" x="0" y="0" width="640" height="400">
    <properties>
     <property name="blue" type="bool" value="false"/>
